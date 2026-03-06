@@ -1284,28 +1284,28 @@ local function ButtonFrame(Instance, Title, Description, HolderSize)
 		AnchorPoint = Vector2.new(0, 0.5),
 		BackgroundTransparency = 1,
 		TextTruncate = "AtEnd",
-		TextSize = 12,
+		TextSize = 14,
 		TextXAlignment = "Left",
 		Text = "",
 		RichText = true
 	}), "Text")
 	
 	local DescL = InsertTheme(Create("TextLabel", {
-		Font = Enum.Font.GothamBold,
+		Font = Enum.Font.Gotham,
 		TextColor3 = Theme["Color Dark Text"],
 		Size = UDim2.new(1, -20),
 		AutomaticSize = "Y",
-		Position = UDim2.new(0, 12, 0, 15),
+		Position = UDim2.new(0, 12, 0, 18),
 		BackgroundTransparency = 1,
 		TextWrapped = true,
-		TextSize = 10,
+		TextSize = 12,
 		TextXAlignment = "Left",
 		Text = "",
 		RichText = true
 	}), "DarkText")
 
 	local Frame = Make("Button", Instance, {
-		Size = UDim2.new(1, 0, 0, 25),
+		Size = UDim2.new(1, 0, 0, 32),
 		AutomaticSize = "Y",
 		Name = "Option"
 	})Make("Corner", Frame, UDim.new(0, 4))Make("Stroke", Frame)
@@ -1841,7 +1841,7 @@ function redzlib:MakeWindow(Configs)
 		end
 		
 		local TabSelect = Make("Button", MainScroll, {
-			Size = UDim2.new(1, 0, 0, 25)
+			Size = UDim2.new(1, 0, 0, 30)
 		})Make("Corner", TabSelect, UDim.new(0, 4))Make("Stroke", TabSelect)
 		
 		local LabelTitle = InsertTheme(Create("TextLabel", TabSelect, {
@@ -2140,8 +2140,9 @@ function redzlib:MakeWindow(Configs)
 			
 			local Button, LabelFunc = ButtonFrame(Container, DName, DDesc, UDim2.new(1, -180))
 			
+			-- Valor selecionado mostrado no botão principal
 			local SelectedFrame = Create("Frame", Button, {
-				Size = UDim2.new(0, 100, 0, 20),
+				Size = UDim2.new(0, 100, 0, 22),
 				Position = UDim2.new(1, -10, 0.5),
 				AnchorPoint = Vector2.new(1, 0.5),
 				BackgroundColor3 = Theme["Color Hub 2"],
@@ -2160,106 +2161,128 @@ function redzlib:MakeWindow(Configs)
 			}), "DarkText")
 			
 			local Arrow = Create("ImageLabel", SelectedFrame, {
-				Size = UDim2.new(0, 20, 0, 20),
+				Size = UDim2.new(0, 16, 0, 16),
 				Position = UDim2.new(0, 5, 0.5),
 				AnchorPoint = Vector2.new(0, 0.5),
 				Image = "rbxassetid://6031090990",
-				BackgroundTransparency = 1
-			})
-			
-			local NoClickFrame = Create("TextButton", DropdownHolder, {
-				Name = "AntiClick",
-				Size = UDim2.new(1, 0, 1, 0),
 				BackgroundTransparency = 1,
+				ImageColor3 = Theme["Color Dark Text"]
+			})
+
+			-- ══════════════════════════════════════════
+			-- PAINEL LATERAL (estilo W-azure)
+			-- Cobre a área de conteúdo pela direita
+			-- ══════════════════════════════════════════
+			local SidePanel = Create("Frame", Containers, {
+				Size = UDim2.new(1, 0, 1, 0),
+				Position = UDim2.new(1, 0, 0, 0), -- começa fora da tela (direita)
+				BackgroundColor3 = Theme["Color Hub 2"],
+				BorderSizePixel = 0,
+				ClipsDescendants = true,
 				Visible = false,
-				Text = ""
+				Name = "SidePanel_" .. DName,
+				ZIndex = 10
+			})
+			InsertTheme(SidePanel, "Frame")
+			
+			-- Header do painel: ← + título
+			local PanelHeader = Create("Frame", SidePanel, {
+				Size = UDim2.new(1, 0, 0, 36),
+				BackgroundColor3 = Color3.fromRGB(26, 26, 26),
+				BorderSizePixel = 0,
+				ZIndex = 11
 			})
 			
-			local DropFrame = Create("Frame", NoClickFrame, {
-				Size = UDim2.new(SelectedFrame.Size.X, 0, 0),
-				BackgroundTransparency = 0.1,
-				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-				AnchorPoint = Vector2.new(0, 1),
-				Name = "DropdownFrame",
-				ClipsDescendants = true,
-				Active = true
-			})Make("Corner", DropFrame)Make("Stroke", DropFrame)Make("Gradient", DropFrame, {Rotation = 60})
+			-- Separador abaixo do header
+			Create("Frame", SidePanel, {
+				Size = UDim2.new(1, 0, 0, 1),
+				Position = UDim2.new(0, 0, 0, 36),
+				BackgroundColor3 = Theme["Color Stroke"],
+				BorderSizePixel = 0,
+				ZIndex = 11
+			})
 			
-			local ScrollFrame = InsertTheme(Create("ScrollingFrame", DropFrame, {
-				ScrollBarImageColor3 = Theme["Color Theme"],
-				Size = UDim2.new(1, 0, 1, 0),
-				ScrollBarThickness = 1.5,
+			-- Botão ← fechar painel
+			local BackBtn = Create("TextButton", PanelHeader, {
+				Size = UDim2.new(0, 30, 1, 0),
+				Position = UDim2.new(0, 5, 0, 0),
+				BackgroundTransparency = 1,
+				Text = "←",
+				Font = Enum.Font.GothamBold,
+				TextSize = 18,
+				TextColor3 = Theme["Color Text"],
+				AutoButtonColor = false,
+				ZIndex = 12
+			})
+			InsertTheme(BackBtn, "Text")
+			
+			-- Título do painel
+			local PanelTitle = Create("TextLabel", PanelHeader, {
+				Size = UDim2.new(1, -45, 1, 0),
+				Position = UDim2.new(0, 38, 0, 0),
+				BackgroundTransparency = 1,
+				Text = DName,
+				Font = Enum.Font.GothamBold,
+				TextSize = 14,
+				TextColor3 = Theme["Color Text"],
+				TextXAlignment = "Left",
+				ZIndex = 12
+			})
+			InsertTheme(PanelTitle, "Text")
+			
+			-- ScrollFrame do painel para as opções/elementos
+			local PanelScroll = InsertTheme(Create("ScrollingFrame", SidePanel, {
+				Size = UDim2.new(1, 0, 1, -37),
+				Position = UDim2.new(0, 0, 0, 37),
 				BackgroundTransparency = 1,
 				BorderSizePixel = 0,
+				ScrollBarThickness = 2,
+				ScrollBarImageColor3 = Theme["Color Theme"],
+				ScrollBarImageTransparency = 0.3,
 				CanvasSize = UDim2.new(),
-				ScrollingDirection = "Y",
 				AutomaticCanvasSize = "Y",
-				Active = true
+				ScrollingDirection = "Y",
+				ZIndex = 11
 			}, {
 				Create("UIPadding", {
 					PaddingLeft = UDim.new(0, 8),
 					PaddingRight = UDim.new(0, 8),
-					PaddingTop = UDim.new(0, 5),
-					PaddingBottom = UDim.new(0, 5)
-				}), Create("UIListLayout", {
-					Padding = UDim.new(0, 4)
+					PaddingTop = UDim.new(0, 8),
+					PaddingBottom = UDim.new(0, 8)
+				}),
+				Create("UIListLayout", {
+					Padding = UDim.new(0, 5),
+					SortOrder = "LayoutOrder"
 				})
 			}), "ScrollBar")
 			
-			local ScrollSize, WaitClick = 5
-			local function Disable()
-				WaitClick = true
-				CreateTween({Arrow, "Rotation", 0, 0.3})
-				CreateTween({DropFrame, "Size", UDim2.new(0, 102, 0, 0), 0.2, true})
-				NoClickFrame.Visible = false
-				WaitClick = false
+			-- Animação abrir/fechar painel
+			local PanelOpen = false
+			local function OpenPanel()
+				if PanelOpen then return end
+				PanelOpen = true
+				SidePanel.Visible = true
+				SidePanel.Position = UDim2.new(1, 0, 0, 0)
+				CreateTween({SidePanel, "Position", UDim2.new(0, 0, 0, 0), 0.25})
+				CreateTween({Arrow, "Rotation", 180, 0.25})
+			end
+			local function ClosePanel()
+				if not PanelOpen then return end
+				PanelOpen = false
+				CreateTween({SidePanel, "Position", UDim2.new(1, 0, 0, 0), 0.25, true})
+				SidePanel.Visible = false
+				CreateTween({Arrow, "Rotation", 0, 0.2})
 			end
 			
-			local function GetFrameSize()
-				return UDim2.fromOffset(102, ScrollSize)
-			end
+			Button.Activated:Connect(function()
+				if PanelOpen then ClosePanel() else OpenPanel() end
+			end)
+			BackBtn.Activated:Connect(ClosePanel)
+			MainFrame:GetPropertyChangedSignal("Visible"):Connect(ClosePanel)
 			
-			local function CalculateSize()
-				local Count = 0
-				for _,Frame in pairs(ScrollFrame:GetChildren()) do
-					if Frame:IsA("Frame") or Frame.Name == "Option" then
-						Count = Count + 1
-					end
-				end
-				ScrollSize = (math.clamp(Count, 0, 10) * 25) + 10
-				if NoClickFrame.Visible then
-					NoClickFrame.Visible = true
-					CreateTween({DropFrame, "Size", GetFrameSize(), 0.2, true})
-				end
-			end
-			
-			local function Minimize()
-				if WaitClick then return end
-				WaitClick = true
-				if NoClickFrame.Visible then
-					CreateTween({Arrow, "Rotation", 0, 0.3})
-					CreateTween({DropFrame, "Size", UDim2.new(0, 102, 0, 0), 0.2, true})
-					NoClickFrame.Visible = false
-				else
-					NoClickFrame.Visible = true
-					CreateTween({Arrow, "Rotation", 180, 0.3})
-					CreateTween({DropFrame, "Size", GetFrameSize(), 0.2, true})
-				end
-				WaitClick = false
-			end
-			
-			local function CalculatePos()
-				local FramePos = SelectedFrame.AbsolutePosition
-				local ScreenSize = ScreenGui.AbsoluteSize
-				local ClampX = math.clamp((FramePos.X / UIScale), 0, ScreenSize.X / UIScale - DropFrame.Size.X.Offset)
-				local ClampY = math.clamp((FramePos.Y / UIScale) , 0, ScreenSize.Y / UIScale)
-				
-				local NewPos = UDim2.fromOffset(ClampX, ClampY)
-				local AnchorPoint = FramePos.Y > ScreenSize.Y / 1.4 and 1 or ScrollSize > 80 and 0.5 or 0
-				DropFrame.AnchorPoint = Vector2.new(0, AnchorPoint)
-				CreateTween({DropFrame, "Position", NewPos, 0.1})
-			end
-			
+			-- ══════════════════════════════════════════
+			-- Opções simples (compatível com API original)
+			-- ══════════════════════════════════════════
 			local AddNewOptions, GetOptions, AddOption, RemoveOption, Selected do
 				local Default = type(OpDefault) ~= "table" and {OpDefault} or OpDefault
 				local MultiSelect = DMultiSelect
@@ -2285,9 +2308,7 @@ function redzlib:MakeWindow(Configs)
 					if MultiSelect then
 						local list = {}
 						for index, Value in pairs(Selected) do
-							if Value then
-								table.insert(list, index)
-							end
+							if Value then table.insert(list, index) end
 						end
 						ActiveLabel.Text = #list > 0 and table.concat(list, ", ") or "..."
 					else
@@ -2299,17 +2320,17 @@ function redzlib:MakeWindow(Configs)
 					if MultiSelect then
 						for _,v in pairs(Options) do
 							local nodes, Stats = v.nodes, v.Stats
-							CreateTween({nodes[2], "BackgroundTransparency", Stats and 0 or 0.8, 0.35})
-							CreateTween({nodes[2], "Size", Stats and UDim2.fromOffset(4, 12) or UDim2.fromOffset(4, 4), 0.35})
-							CreateTween({nodes[3], "TextColor3", Stats and Theme["Color Text"] or Theme["Color Dark Text"], 0.35})
+							CreateTween({nodes[2], "BackgroundTransparency", Stats and 0 or 0.8, 0.25})
+							CreateTween({nodes[2], "Size", Stats and UDim2.fromOffset(4, 14) or UDim2.fromOffset(4, 4), 0.25})
+							CreateTween({nodes[3], "TextColor3", Stats and Theme["Color Text"] or Theme["Color Dark Text"], 0.25})
 						end
 					else
 						for _,v in pairs(Options) do
 							local Slt = v.Value == Selected
 							local nodes = v.nodes
-							CreateTween({nodes[2], "BackgroundTransparency", Slt and 0 or 1, 0.35})
-							CreateTween({nodes[2], "Size", Slt and UDim2.fromOffset(4, 14) or UDim2.fromOffset(4, 4), 0.35})
-							CreateTween({nodes[3], "TextColor3", Slt and Theme["Color Text"] or Theme["Color Dark Text"], 0.35})
+							CreateTween({nodes[2], "BackgroundTransparency", Slt and 0 or 1, 0.25})
+							CreateTween({nodes[2], "Size", Slt and UDim2.fromOffset(4, 16) or UDim2.fromOffset(4, 4), 0.25})
+							CreateTween({nodes[3], "TextColor3", Slt and Theme["Color Text"] or Theme["Color Dark Text"], 0.25})
 						end
 					end
 					UpdateLabel()
@@ -2319,12 +2340,10 @@ function redzlib:MakeWindow(Configs)
 					if MultiSelect then
 						Option.Stats = not Option.Stats
 						Option.LastCB = tick()
-						
 						Selected[Option.Name] = Option.Stats
 						CallbackSelected()
 					else
 						Option.LastCB = tick()
-						
 						Selected = Option.Value
 						CallbackSelected()
 					end
@@ -2333,53 +2352,44 @@ function redzlib:MakeWindow(Configs)
 				
 				AddOption = function(index, Value)
 					local Name = tostring(type(index) == "string" and index or Value)
-					
 					if Options[Name] then return end
-					Options[Name] = {
-						index = index,
-						Value = Value,
-						Name = Name,
-						Stats = false,
-						LastCB = 0
-					}
-					
+					Options[Name] = { index = index, Value = Value, Name = Name, Stats = false, LastCB = 0 }
 					if MultiSelect then
 						local Stats = Selected[Name]
 						Selected[Name] = Stats or false
 						Options[Name].Stats = Stats
 					end
 					
-					local Button = Make("Button", ScrollFrame, {
+					local Btn = Make("Button", PanelScroll, {
 						Name = "Option",
-						Size = UDim2.new(1, 0, 0, 21),
-						Position = UDim2.new(0, 0, 0.5),
-						AnchorPoint = Vector2.new(0, 0.5)
-					})Make("Corner", Button, UDim.new(0, 4))
+						Size = UDim2.new(1, 0, 0, 32),
+						ZIndex = 12
+					})Make("Corner", Btn, UDim.new(0, 4))Make("Stroke", Btn)
 					
-					local IsSelected = InsertTheme(Create("Frame", Button, {
-						Position = UDim2.new(0, 1, 0.5),
+					local IsSelected = InsertTheme(Create("Frame", Btn, {
+						Position = UDim2.new(0, 2, 0.5),
 						Size = UDim2.new(0, 4, 0, 4),
 						BackgroundColor3 = Theme["Color Theme"],
 						BackgroundTransparency = 1,
-						AnchorPoint = Vector2.new(0, 0.5)
+						AnchorPoint = Vector2.new(0, 0.5),
+						ZIndex = 13
 					}), "Theme")Make("Corner", IsSelected, UDim.new(0.5, 0))
 					
-					local OptioneName = Create("TextLabel", Button, {
-						Size = UDim2.new(1, 0, 1),
-						Position = UDim2.new(0, 10),
+					local OptLabel = Create("TextLabel", Btn, {
+						Size = UDim2.new(1, -20, 1, 0),
+						Position = UDim2.new(0, 14),
 						Text = Name,
 						TextColor3 = Theme["Color Dark Text"],
 						Font = Enum.Font.GothamBold,
 						TextXAlignment = "Left",
 						BackgroundTransparency = 1,
-						TextSize = 12
+						TextSize = 13,
+						ZIndex = 13
 					})
+					InsertTheme(OptLabel, "DarkText")
 					
-					Button.Activated:Connect(function()
-						Select(Options[Name])
-					end)
-					
-					Options[Name].nodes = {Button, IsSelected, OptioneName}
+					Btn.Activated:Connect(function() Select(Options[Name]) end)
+					Options[Name].nodes = {Btn, IsSelected, OptLabel}
 				end
 				
 				RemoveOption = function(index, Value)
@@ -2392,14 +2402,10 @@ function redzlib:MakeWindow(Configs)
 					end
 				end
 				
-				GetOptions = function()
-					return Options
-				end
+				GetOptions = function() return Options end
 				
 				AddNewOptions = function(List, Clear)
-					if Clear then
-						table.foreach(Options, RemoveOption)
-					end
+					if Clear then table.foreach(Options, RemoveOption) end
 					table.foreach(List, AddOption)
 					CallbackSelected()
 					UpdateSelected()
@@ -2410,33 +2416,21 @@ function redzlib:MakeWindow(Configs)
 				UpdateSelected()
 			end
 			
-			Button.Activated:Connect(Minimize)
-			NoClickFrame.MouseButton1Down:Connect(Disable)
-			NoClickFrame.MouseButton1Click:Connect(Disable)
-			MainFrame:GetPropertyChangedSignal("Visible"):Connect(Disable)
-			SelectedFrame:GetPropertyChangedSignal("AbsolutePosition"):Connect(CalculatePos)
-			
-			Button.Activated:Connect(CalculateSize)
-			ScrollFrame.ChildAdded:Connect(CalculateSize)
-			ScrollFrame.ChildRemoved:Connect(CalculateSize)
-			CalculatePos()
-			CalculateSize()
-			
+			-- ══════════════════════════════════════════
+			-- NOVOS MÉTODOS: AddToggle e AddSlider dentro do dropdown
+			-- Não alteram a API externa, são métodos do objeto Dropdown
+			-- ══════════════════════════════════════════
 			local Dropdown = {}
 			function Dropdown:Visible(...) Funcs:ToggleVisible(Button, ...) end
-			function Dropdown:Destroy() Button:Destroy() end
+			function Dropdown:Destroy() Button:Destroy() SidePanel:Destroy() end
 			function Dropdown:Callback(...) Funcs:InsertCallback(Callback, ...)(Selected) end
 			
 			function Dropdown:Add(...)
 				local NewOptions = {...}
 				if type(NewOptions[1]) == "table" then
-					table.foreach(Option, function(_,Name)
-						AddOption(Name)
-					end)
+					table.foreach(NewOptions[1], function(_,Name) AddOption(Name) end)
 				else
-					table.foreach(NewOptions, function(_,Name)
-						AddOption(Name)
-					end)
+					table.foreach(NewOptions, function(_,Name) AddOption(Name) end)
 				end
 			end
 			function Dropdown:Remove(Option)
@@ -2448,16 +2442,8 @@ function redzlib:MakeWindow(Configs)
 			end
 			function Dropdown:Select(Option)
 				if type(Option) == "string" then
-					for _,Val in pairs(Options) do
-						if Val.Name == Option then
-							Val.Active()
-						end
-					end
-				elseif type(Option) == "number" then
-					for ind,Val in pairs(Options) do
-						if ind == Option then
-							Val.Active()
-						end
+					for _,Val in pairs(GetOptions()) do
+						if Val.Name == Option then Val.Active and Val.Active() end
 					end
 				end
 			end
@@ -2468,6 +2454,202 @@ function redzlib:MakeWindow(Configs)
 					Callback = Val1
 				end
 			end
+			
+			-- Toggle dentro do painel do dropdown
+			function Dropdown:AddToggle(Configs)
+				local TName2 = Configs[1] or Configs.Name or "Toggle"
+				local TDefault2 = Configs[2] or Configs.Default or false
+				local Callback2 = Funcs:GetCallback(Configs, 3)
+				local Flag2 = Configs[4] or Configs.Flag or false
+				if CheckFlag(Flag2) then TDefault2 = GetFlag(Flag2) end
+				
+				local Row = InsertTheme(Create("Frame", PanelScroll, {
+					Size = UDim2.new(1, 0, 0, 32),
+					BackgroundColor3 = Theme["Color Hub 2"],
+					Name = "Option",
+					ZIndex = 12
+				}), "Frame")Make("Corner", Row, UDim.new(0, 4))Make("Stroke", Row)
+				
+				local RowLabel = InsertTheme(Create("TextLabel", Row, {
+					Size = UDim2.new(1, -50, 1, 0),
+					Position = UDim2.new(0, 12, 0, 0),
+					BackgroundTransparency = 1,
+					Font = Enum.Font.GothamBold,
+					Text = TName2,
+					TextColor3 = Theme["Color Text"],
+					TextSize = 13,
+					TextXAlignment = "Left",
+					ZIndex = 13
+				}), "Text")
+				
+				local THolder = Create("Frame", Row, {
+					Size = UDim2.new(0, 28, 0, 16),
+					Position = UDim2.new(1, -10, 0.5),
+					AnchorPoint = Vector2.new(1, 0.5),
+					BackgroundTransparency = 1,
+					ZIndex = 13
+				})Make("Corner", THolder, UDim.new(1, 0))
+				local TStroke = InsertTheme(Create("UIStroke", THolder, {
+					Color = Theme["Color Stroke"],
+					Thickness = 2,
+					ApplyStrokeMode = "Border"
+				}), "Stroke")
+				local TKnob = Create("Frame", THolder, {
+					Size = UDim2.new(0, 13, 0, 13),
+					Position = UDim2.new(0, 2, 0.5),
+					AnchorPoint = Vector2.new(0, 0.5),
+					BackgroundColor3 = Theme["Color Stroke"],
+					ZIndex = 14
+				})Make("Corner", TKnob, UDim.new(1, 0))
+				InsertTheme(TKnob, "Stroke")
+				
+				local TWait
+				local function SetT(Val)
+					if TWait then return end
+					TWait = true
+					TDefault2 = Val
+					SetFlag(Flag2, Val)
+					Funcs:FireCallback(Callback2, Val)
+					if Val then
+						CreateTween({TKnob, "Position", UDim2.new(1, -15, 0.5), 0.2})
+						CreateTween({TKnob, "BackgroundColor3", Theme["Color Theme"], 0.2})
+						CreateTween({TStroke, "Color", Theme["Color Theme"], 0.2})
+					else
+						CreateTween({TKnob, "Position", UDim2.new(0, 2, 0.5), 0.2})
+						CreateTween({TKnob, "BackgroundColor3", Theme["Color Stroke"], 0.2})
+						CreateTween({TStroke, "Color", Theme["Color Stroke"], 0.2})
+					end
+					TWait = false
+				end
+				task.spawn(SetT, TDefault2)
+				
+				local RowBtn = Create("TextButton", Row, {
+					Size = UDim2.fromScale(1, 1),
+					BackgroundTransparency = 1,
+					Text = "",
+					ZIndex = 15
+				})
+				RowBtn.Activated:Connect(function() SetT(not TDefault2) end)
+				
+				local T2 = {}
+				function T2:Set(v) if type(v) == "boolean" then task.spawn(SetT, v) end end
+				function T2:Destroy() Row:Destroy() end
+				return T2
+			end
+			
+			-- Slider dentro do painel do dropdown
+			function Dropdown:AddSlider(Configs)
+				local SName2 = Configs[1] or Configs.Name or "Slider"
+				local SMin = (Configs[2] or Configs.Min or 0)
+				local SMax = (Configs[3] or Configs.Max or 100)
+				local SIncrease = Configs[4] or Configs.Increase or 1
+				local SDefault = Configs[5] or Configs.Default or SMin
+				local Callback2 = Funcs:GetCallback(Configs, 6)
+				local Flag2 = Configs[7] or Configs.Flag or false
+				if CheckFlag(Flag2) then SDefault = GetFlag(Flag2) end
+				local SMinI, SMaxI = SMin / SIncrease, SMax / SIncrease
+				
+				local Row = InsertTheme(Create("Frame", PanelScroll, {
+					Size = UDim2.new(1, 0, 0, 42),
+					BackgroundColor3 = Theme["Color Hub 2"],
+					Name = "Option",
+					ZIndex = 12
+				}), "Frame")Make("Corner", Row, UDim.new(0, 4))Make("Stroke", Row)
+				
+				local RowLabel = InsertTheme(Create("TextLabel", Row, {
+					Size = UDim2.new(0.6, 0, 0, 18),
+					Position = UDim2.new(0, 12, 0, 4),
+					BackgroundTransparency = 1,
+					Font = Enum.Font.GothamBold,
+					Text = SName2,
+					TextColor3 = Theme["Color Text"],
+					TextSize = 13,
+					TextXAlignment = "Left",
+					ZIndex = 13
+				}), "Text")
+				
+				local ValLabel = InsertTheme(Create("TextLabel", Row, {
+					Size = UDim2.new(0.35, 0, 0, 18),
+					Position = UDim2.new(1, -12, 0, 4),
+					AnchorPoint = Vector2.new(1, 0),
+					BackgroundTransparency = 1,
+					Font = Enum.Font.GothamBold,
+					Text = tostring(SDefault),
+					TextColor3 = Theme["Color Theme"],
+					TextSize = 13,
+					TextXAlignment = "Right",
+					ZIndex = 13
+				}), "Theme")
+				
+				local SBarBg = Create("Frame", Row, {
+					Size = UDim2.new(1, -24, 0, 5),
+					Position = UDim2.new(0, 12, 1, -12),
+					AnchorPoint = Vector2.new(0, 1),
+					BackgroundColor3 = Theme["Color Stroke"],
+					ZIndex = 13
+				})Make("Corner", SBarBg)
+				InsertTheme(SBarBg, "Stroke")
+				
+				local SBarFill = Create("Frame", SBarBg, {
+					Size = UDim2.fromScale(0, 1),
+					BackgroundColor3 = Theme["Color Theme"],
+					ZIndex = 14
+				})Make("Corner", SBarFill)
+				InsertTheme(SBarFill, "Theme")
+				
+				local SHandle = Create("Frame", SBarBg, {
+					Size = UDim2.new(0, 10, 0, 10),
+					Position = UDim2.fromScale(0, 0.5),
+					AnchorPoint = Vector2.new(0.5, 0.5),
+					BackgroundColor3 = Theme["Color Theme"],
+					ZIndex = 15
+				})Make("Corner", SHandle, UDim.new(1, 0))
+				InsertTheme(SHandle, "Theme")
+				
+				local SBtn = Create("TextButton", Row, {
+					Size = UDim2.new(1, 0, 0, 18),
+					Position = UDim2.new(0, 0, 1, -18),
+					BackgroundTransparency = 1,
+					Text = "",
+					AutoButtonColor = false,
+					ZIndex = 16
+				})
+				
+				local SDef = SDefault
+				local function SetSlider2(NewValue)
+					if type(NewValue) ~= "number" then return end
+					local pos = math.clamp((NewValue - SMin) / (SMax - SMin), 0, 1)
+					SHandle.Position = UDim2.fromScale(pos, 0.5)
+					SBarFill.Size = UDim2.fromScale(pos, 1)
+					local rounded = math.floor(NewValue * 100) / 100
+					SDef = rounded
+					ValLabel.Text = tostring(rounded)
+					SetFlag(Flag2, rounded)
+					Funcs:FireCallback(Callback2, rounded)
+				end
+				SetSlider2(SDefault)
+				
+				SBtn.MouseButton1Down:Connect(function()
+					Container.ScrollingEnabled = false
+					while UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+						task.wait()
+						local mx = Player:GetMouse().X
+						local ax = SBarBg.AbsolutePosition.X
+						local aw = SBarBg.AbsoluteSize.X
+						local pos = math.clamp((mx - ax) / aw, 0, 1)
+						local val = SMinI + math.floor(pos * (SMaxI - SMinI) + 0.5)
+						SetSlider2(val * SIncrease)
+					end
+					Container.ScrollingEnabled = true
+					SetFlag(Flag2, SDef)
+				end)
+				
+				local S2 = {}
+				function S2:Set(v) if type(v) == "number" then SetSlider2(v) end end
+				function S2:Destroy() Row:Destroy() end
+				return S2
+			end
+			
 			return Dropdown
 		end
 		function Tab:AddSlider(Configs)
@@ -2783,6 +2965,129 @@ function redzlib:MakeWindow(Configs)
 	CloseButton.Activated:Connect(Window.CloseBtn)
 	MinimizeButton.Activated:Connect(Window.MinimizeBtn)
 	return Window
+end
+
+-- ══════════════════════════════════════════════════════════════════
+-- SISTEMA DE NOTIFICAÇÕES  —  redzlib:Notify({Title, Text, Duration})
+-- Notificações aparecem no canto inferior direito, empilhadas
+-- ══════════════════════════════════════════════════════════════════
+local NotifyHolder = Create("Frame", ScreenGui, {
+	Size = UDim2.new(0, 260, 1, 0),
+	Position = UDim2.new(1, -10, 0, 0),
+	AnchorPoint = Vector2.new(1, 0),
+	BackgroundTransparency = 1,
+	Name = "NotifyHolder"
+}, {
+	Create("UIListLayout", {
+		VerticalAlignment = "Bottom",
+		HorizontalAlignment = "Right",
+		Padding = UDim.new(0, 6),
+		SortOrder = "LayoutOrder",
+		FillDirection = "Vertical"
+	}),
+	Create("UIPadding", {
+		PaddingBottom = UDim.new(0, 14),
+		PaddingRight = UDim.new(0, 0)
+	})
+})
+
+function redzlib:Notify(Configs)
+	local NTitle    = (type(Configs) == "string" and Configs) or Configs[1] or Configs.Title or "Notification"
+	local NText     = Configs[2] or Configs.Text or Configs.Description or ""
+	local NDuration = Configs[3] or Configs.Duration or 4
+	local NType     = Configs.Type or "info" -- "info" | "success" | "error" | "warning"
+	
+	local AccentColor = ({
+		info    = Theme["Color Theme"],
+		success = Color3.fromRGB(60, 200, 100),
+		error   = Color3.fromRGB(220, 60, 60),
+		warning = Color3.fromRGB(230, 165, 30),
+	})[NType] or Theme["Color Theme"]
+	
+	-- Container
+	local Card = Create("Frame", NotifyHolder, {
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = "Y",
+		BackgroundColor3 = Theme["Color Hub 2"],
+		BackgroundTransparency = 1,
+		ClipsDescendants = false,
+		Name = "Notify"
+	})
+	Make("Corner", Card, UDim.new(0, 6))
+	Create("UIStroke", Card, {
+		Color = AccentColor,
+		Thickness = 1,
+		ApplyStrokeMode = "Border"
+	})
+	
+	-- Barra colorida à esquerda
+	local LeftBar = Create("Frame", Card, {
+		Size = UDim2.new(0, 3, 1, -10),
+		Position = UDim2.new(0, 4, 0.5),
+		AnchorPoint = Vector2.new(0, 0.5),
+		BackgroundColor3 = AccentColor,
+		BorderSizePixel = 0
+	})
+	Make("Corner", LeftBar, UDim.new(0, 2))
+	
+	-- Título
+	local NTitleLabel = Create("TextLabel", Card, {
+		Size = UDim2.new(1, -22, 0, 18),
+		Position = UDim2.new(0, 14, 0, 8),
+		BackgroundTransparency = 1,
+		Font = Enum.Font.GothamBold,
+		Text = NTitle,
+		TextColor3 = Color3.fromRGB(255, 255, 255),
+		TextSize = 13,
+		TextXAlignment = "Left",
+		TextTruncate = "AtEnd"
+	})
+	
+	-- Texto
+	local NTextLabel = Create("TextLabel", Card, {
+		Size = UDim2.new(1, -22, 0, 0),
+		Position = UDim2.new(0, 14, 0, 28),
+		AutomaticSize = "Y",
+		BackgroundTransparency = 1,
+		Font = Enum.Font.Gotham,
+		Text = NText,
+		TextColor3 = Theme["Color Dark Text"],
+		TextSize = 11,
+		TextXAlignment = "Left",
+		TextWrapped = true
+	})
+	
+	-- Barra de progresso (duration bar)
+	local ProgressBg = Create("Frame", Card, {
+		Size = UDim2.new(1, -20, 0, 2),
+		Position = UDim2.new(0, 10, 1, -6),
+		AnchorPoint = Vector2.new(0, 1),
+		BackgroundColor3 = Theme["Color Stroke"],
+		BorderSizePixel = 0
+	})
+	Make("Corner", ProgressBg, UDim.new(0, 2))
+	local ProgressFill = Create("Frame", ProgressBg, {
+		Size = UDim2.fromScale(1, 1),
+		BackgroundColor3 = AccentColor,
+		BorderSizePixel = 0
+	})
+	Make("Corner", ProgressFill, UDim.new(0, 2))
+	
+	-- Animação de entrada (desliza da direita)
+	Card.BackgroundTransparency = 1
+	task.spawn(function()
+		-- Fade in
+		CreateTween({Card, "BackgroundTransparency", 0, 0.2})
+		task.wait(0.05)
+		-- Progress bar drain
+		CreateTween({ProgressFill, "Size", UDim2.fromScale(0, 1), NDuration - 0.3})
+		task.wait(NDuration - 0.3)
+		-- Fade out
+		CreateTween({Card, "BackgroundTransparency", 1, 0.3, true})
+		Card:Destroy()
+	end)
+	
+	return Card
 end
 
 return redzlib
