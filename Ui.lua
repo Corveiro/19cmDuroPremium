@@ -1284,31 +1284,31 @@ local function ButtonFrame(Instance, Title, Description, HolderSize)
 		AnchorPoint = Vector2.new(0, 0.5),
 		BackgroundTransparency = 1,
 		TextTruncate = "AtEnd",
-		TextSize = 14,
+		TextSize = 12,
 		TextXAlignment = "Left",
 		Text = "",
 		RichText = true
 	}), "Text")
 	
 	local DescL = InsertTheme(Create("TextLabel", {
-		Font = Enum.Font.Gotham,
+		Font = Enum.Font.GothamBold,
 		TextColor3 = Theme["Color Dark Text"],
 		Size = UDim2.new(1, -20),
 		AutomaticSize = "Y",
-		Position = UDim2.new(0, 12, 0, 18),
+		Position = UDim2.new(0, 12, 0, 15),
 		BackgroundTransparency = 1,
 		TextWrapped = true,
-		TextSize = 11,
+		TextSize = 10,
 		TextXAlignment = "Left",
 		Text = "",
 		RichText = true
 	}), "DarkText")
 
 	local Frame = Make("Button", Instance, {
-		Size = UDim2.new(1, 0, 0, 42),
+		Size = UDim2.new(1, 0, 0, 25),
 		AutomaticSize = "Y",
 		Name = "Option"
-	})Make("Corner", Frame, UDim.new(0, 9))Make("Stroke", Frame)
+	})Make("Corner", Frame, UDim.new(0, 4))Make("Stroke", Frame)
 	-- Gradiente interno premium
 	Create("UIGradient", Frame, {
 		Color = ColorSequence.new({
@@ -1350,8 +1350,8 @@ local function ButtonFrame(Instance, Title, Description, HolderSize)
 			Padding = UDim.new(0, 2)
 		}),
 		Create("UIPadding", {
-			PaddingBottom = UDim.new(0, 10),
-			PaddingTop = UDim.new(0, 10)
+			PaddingBottom = UDim.new(0, 5),
+			PaddingTop = UDim.new(0, 5)
 		}),
 		TitleL,
 		DescL,
@@ -1487,269 +1487,379 @@ function redzlib:MakeWindow(Configs)
 	
 	local MainCorner = Make("Corner", MainFrame, UDim.new(0, 4))
 	
-	-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-	-- LOADING SCREEN PREMIUM
-	-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+	-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	-- LOADING SCREEN ÉPICO  (ScreenGui separado, alta prioridade)
+	-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 	local _OrigSize = MainFrame.Size
 	MainFrame.Size  = UDim2.fromOffset(0, 0)
 	MainFrame.BackgroundTransparency = 1
 
-	-- Overlay escuro sobre o jogo
-	local LS_Overlay = Create("Frame", ScreenGui, {
+	-- ScreenGui dedicado ao loading (DisplayOrder máximo)
+	local LS_Gui = Create("ScreenGui", CoreGui, {
+		Name = "RedzLoad",
+		ResetOnSpawn = false,
+		DisplayOrder = 999,
+		ZIndexBehavior = "Sibling"
+	})
+
+	-- Overlay com vignette radial
+	local LS_Bg = Create("Frame", LS_Gui, {
 		Size = UDim2.fromScale(1, 1),
-		BackgroundColor3 = Color3.fromRGB(8, 8, 10),
-		BackgroundTransparency = 0.15,
-		BorderSizePixel = 0,
-		ZIndex = 195,
-		Name = "LS_Overlay"
+		BackgroundColor3 = Color3.fromRGB(6, 6, 8),
+		BorderSizePixel = 0
 	})
-
-	-- Card principal
-	local LS_Card = Create("Frame", ScreenGui, {
-		Size = UDim2.fromOffset(340, 220),
-		Position = UDim2.fromScale(0.5, 0.5),
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		BackgroundColor3 = Color3.fromRGB(16, 16, 20),
-		BorderSizePixel = 0,
-		ZIndex = 200,
-		Name = "LS_Card",
-		BackgroundTransparency = 1
-	})
-	Create("UICorner", LS_Card, {CornerRadius = UDim.new(0, 16)})
-	Create("UIGradient", LS_Card, {
+	Create("UIGradient", LS_Bg, {
 		Color = ColorSequence.new({
-			ColorSequenceKeypoint.new(0, Color3.fromRGB(26, 26, 32)),
-			ColorSequenceKeypoint.new(1, Color3.fromRGB(14, 14, 18))
-		}),
-		Rotation = 140
-	})
-
-	-- Borda glowing com gradiente
-	Create("UIStroke", LS_Card, {
-		Color = Theme["Color Theme"],
-		Thickness = 1.2,
-		ApplyStrokeMode = "Border"
-	})
-
-	-- Linha accent topo (animada)
-	local LS_AccentLine = Create("Frame", LS_Card, {
-		Size = UDim2.fromOffset(0, 2),
-		Position = UDim2.new(0.5, 0, 0, 0),
-		AnchorPoint = Vector2.new(0.5, 0),
-		BackgroundColor3 = Theme["Color Theme"],
-		BorderSizePixel = 0,
-		ZIndex = 201
-	})
-	Create("UICorner", LS_AccentLine, {CornerRadius = UDim.new(0, 1)})
-	Create("UIGradient", LS_AccentLine, {
-		Color = ColorSequence.new({
-			ColorSequenceKeypoint.new(0, Color3.fromRGB(255,255,255)),
-			ColorSequenceKeypoint.new(0.5, Theme["Color Theme"]),
-			ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))
+			ColorSequenceKeypoint.new(0,   Color3.fromRGB(0, 0, 0)),
+			ColorSequenceKeypoint.new(0.45, Color3.fromRGB(6, 6, 8)),
+			ColorSequenceKeypoint.new(0.55, Color3.fromRGB(6, 6, 8)),
+			ColorSequenceKeypoint.new(1,   Color3.fromRGB(0, 0, 0))
 		}),
 		Transparency = NumberSequence.new({
-			NumberSequenceKeypoint.new(0, 0.6),
-			NumberSequenceKeypoint.new(0.5, 0),
-			NumberSequenceKeypoint.new(1, 0.6)
+			NumberSequenceKeypoint.new(0,   0.2),
+			NumberSequenceKeypoint.new(0.4, 0),
+			NumberSequenceKeypoint.new(0.6, 0),
+			NumberSequenceKeypoint.new(1,   0.2)
 		})
 	})
 
-	-- Avatar circular pulsante
-	local LS_Avatar = Create("Frame", LS_Card, {
-		Size = UDim2.fromOffset(52, 52),
-		Position = UDim2.new(0.5, 0, 0, 32),
-		AnchorPoint = Vector2.new(0.5, 0),
-		BackgroundColor3 = Theme["Color Theme"],
-		BackgroundTransparency = 0.2,
+	-- Partículas decorativas (4 pontos de luz flutuantes)
+	local function MakeSpark(px, py, sz, col)
+		local f = Create("Frame", LS_Bg, {
+			Size = UDim2.fromOffset(sz, sz),
+			Position = UDim2.fromScale(px, py),
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			BackgroundColor3 = col,
+			BackgroundTransparency = 0.5,
+			BorderSizePixel = 0
+		})
+		Create("UICorner", f, {CornerRadius = UDim.new(1, 0)})
+		task.spawn(function()
+			local dir = math.random() > 0.5 and 1 or -1
+			while f and f.Parent do
+				TweenService:Create(f, TweenInfo.new(2.2 + math.random(), Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+					{Position = UDim2.fromScale(px, py + dir * 0.04), BackgroundTransparency = 0.8}):Play()
+				task.wait(2.2 + math.random())
+				TweenService:Create(f, TweenInfo.new(2.2 + math.random(), Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+					{Position = UDim2.fromScale(px, py), BackgroundTransparency = 0.3}):Play()
+				task.wait(2.2 + math.random())
+			end
+		end)
+		return f
+	end
+	local sparks = {
+		MakeSpark(0.25, 0.35, 5,  Theme["Color Theme"]),
+		MakeSpark(0.75, 0.28, 4,  Theme["Color Theme"]),
+		MakeSpark(0.18, 0.62, 6,  Theme["Color Theme"]),
+		MakeSpark(0.82, 0.70, 3,  Theme["Color Theme"]),
+		MakeSpark(0.50, 0.20, 5,  Color3.fromRGB(255, 255, 255)),
+	}
+
+	-- Card central premium
+	local LS_Card = Create("Frame", LS_Gui, {
+		Size = UDim2.fromOffset(360, 240),
+		Position = UDim2.fromScale(0.5, 0.5),
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		BackgroundColor3 = Color3.fromRGB(14, 14, 18),
 		BorderSizePixel = 0,
-		ZIndex = 202
+		BackgroundTransparency = 1
 	})
-	Create("UICorner", LS_Avatar, {CornerRadius = UDim.new(1, 0)})
-	Create("UIStroke", LS_Avatar, {
+	Create("UICorner", LS_Card, {CornerRadius = UDim.new(0, 18)})
+	Create("UIGradient", LS_Card, {
+		Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0,   Color3.fromRGB(28, 28, 36)),
+			ColorSequenceKeypoint.new(0.6, Color3.fromRGB(20, 20, 26)),
+			ColorSequenceKeypoint.new(1,   Color3.fromRGB(12, 12, 16))
+		}),
+		Rotation = 145
+	})
+	Create("UIStroke", LS_Card, {
+		Color = Theme["Color Theme"],
+		Thickness = 1,
+		ApplyStrokeMode = "Border"
+	})
+
+	-- Linha accent topo (cresce da esquerda)
+	local LS_AccentTop = Create("Frame", LS_Card, {
+		Size = UDim2.fromOffset(0, 2),
+		Position = UDim2.fromScale(0, 0),
+		BackgroundColor3 = Theme["Color Theme"],
+		BorderSizePixel = 0
+	})
+	Create("UICorner", LS_AccentTop, {CornerRadius = UDim.new(0, 1)})
+	Create("UIGradient", LS_AccentTop, {
+		Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0,   Color3.fromRGB(255,255,255)),
+			ColorSequenceKeypoint.new(0.5, Theme["Color Theme"]),
+			ColorSequenceKeypoint.new(1,   Color3.fromRGB(120,200,255))
+		}),
+		Transparency = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 0.4),
+			NumberSequenceKeypoint.new(0.5, 0),
+			NumberSequenceKeypoint.new(1, 0.4)
+		})
+	})
+
+	-- Anel pulsante ao redor do avatar
+	local LS_Ring = Create("Frame", LS_Card, {
+		Size = UDim2.fromOffset(68, 68),
+		Position = UDim2.new(0.5, 0, 0, 30),
+		AnchorPoint = Vector2.new(0.5, 0),
+		BackgroundTransparency = 1,
+		BorderSizePixel = 0
+	})
+	Create("UICorner", LS_Ring, {CornerRadius = UDim.new(1, 0)})
+	Create("UIStroke", LS_Ring, {
 		Color = Theme["Color Theme"],
 		Thickness = 1.5,
 		ApplyStrokeMode = "Border"
 	})
-	Create("TextLabel", LS_Avatar, {
+
+	-- Avatar circular
+	local LS_Av = Create("Frame", LS_Card, {
+		Size = UDim2.fromOffset(54, 54),
+		Position = UDim2.new(0.5, 0, 0, 37),
+		AnchorPoint = Vector2.new(0.5, 0),
+		BackgroundColor3 = Theme["Color Theme"],
+		BackgroundTransparency = 0.25,
+		BorderSizePixel = 0
+	})
+	Create("UICorner", LS_Av, {CornerRadius = UDim.new(1, 0)})
+	Create("UIGradient", LS_Av, {
+		Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+			ColorSequenceKeypoint.new(1, Theme["Color Theme"])
+		}),
+		Transparency = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 0.6), NumberSequenceKeypoint.new(1, 0.2)
+		}),
+		Rotation = 135
+	})
+	Create("TextLabel", LS_Av, {
 		Size = UDim2.fromScale(1, 1),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamBold,
 		Text = WTitle:sub(1,1):upper(),
-		TextColor3 = Color3.fromRGB(255,255,255),
-		TextSize = 24,
-		ZIndex = 203
+		TextColor3 = Color3.fromRGB(255, 255, 255),
+		TextSize = 26
 	})
 
 	-- Título
-	Create("TextLabel", LS_Card, {
+	local LS_Title = Create("TextLabel", LS_Card, {
 		Size = UDim2.new(1, -30, 0, 26),
-		Position = UDim2.new(0, 15, 0, 96),
+		Position = UDim2.new(0, 15, 0, 104),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamBold,
 		Text = WTitle,
-		TextColor3 = Color3.fromRGB(242, 242, 255),
-		TextSize = 20,
+		TextColor3 = Color3.fromRGB(240, 240, 255),
+		TextSize = 19,
 		TextXAlignment = "Center",
-		ZIndex = 202,
-		TextTransparency = 1,
-		Name = "LS_Title"
+		TextTransparency = 1
 	})
 
-	-- Status
+	-- Subtítulo/status dinâmico
 	local LS_Status = Create("TextLabel", LS_Card, {
 		Size = UDim2.new(1, -30, 0, 16),
-		Position = UDim2.new(0, 15, 0, 128),
+		Position = UDim2.new(0, 15, 0, 134),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.Gotham,
 		Text = "Inicializando...",
 		TextColor3 = Theme["Color Theme"],
 		TextSize = 11,
-		TextXAlignment = "Center",
-		ZIndex = 202
+		TextXAlignment = "Center"
 	})
 
-	-- Container da barra de progresso
+	-- Barra de progresso fundo
 	local LS_BarBg = Create("Frame", LS_Card, {
-		Size = UDim2.new(1, -48, 0, 4),
-		Position = UDim2.new(0, 24, 0, 158),
-		BackgroundColor3 = Color3.fromRGB(35, 35, 45),
-		BorderSizePixel = 0,
-		ZIndex = 202
+		Size = UDim2.new(1, -60, 0, 4),
+		Position = UDim2.new(0, 30, 0, 162),
+		BackgroundColor3 = Color3.fromRGB(32, 32, 42),
+		BorderSizePixel = 0
 	})
 	Create("UICorner", LS_BarBg, {CornerRadius = UDim.new(0, 2)})
 
-	local LS_BarFill = Create("Frame", LS_BarBg, {
+	-- Fill
+	local LS_Fill = Create("Frame", LS_BarBg, {
 		Size = UDim2.fromScale(0, 1),
 		BackgroundColor3 = Theme["Color Theme"],
-		BorderSizePixel = 0,
-		ZIndex = 203
+		BorderSizePixel = 0
 	})
-	Create("UICorner", LS_BarFill, {CornerRadius = UDim.new(0, 2)})
-	Create("UIGradient", LS_BarFill, {
+	Create("UICorner", LS_Fill, {CornerRadius = UDim.new(0, 2)})
+	Create("UIGradient", LS_Fill, {
 		Color = ColorSequence.new({
-			ColorSequenceKeypoint.new(0, Color3.fromRGB(180, 230, 255)),
+			ColorSequenceKeypoint.new(0,   Color3.fromRGB(180, 230, 255)),
 			ColorSequenceKeypoint.new(0.5, Theme["Color Theme"]),
-			ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 230, 255))
+			ColorSequenceKeypoint.new(1,   Color3.fromRGB(255, 255, 255))
 		}),
 		Transparency = NumberSequence.new({
-			NumberSequenceKeypoint.new(0, 0.15),
-			NumberSequenceKeypoint.new(0.5, 0),
-			NumberSequenceKeypoint.new(1, 0.15)
+			NumberSequenceKeypoint.new(0, 0.2), NumberSequenceKeypoint.new(0.5, 0), NumberSequenceKeypoint.new(1, 0.15)
 		})
 	})
 
-	-- Percentagem e versão
+	-- Shimmer animado na barra
+	local LS_Shim = Create("Frame", LS_Fill, {
+		Size = UDim2.fromOffset(30, 4),
+		Position = UDim2.fromScale(-0.2, 0),
+		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+		BackgroundTransparency = 0.6,
+		BorderSizePixel = 0
+	})
+	Create("UICorner", LS_Shim, {CornerRadius = UDim.new(0, 2)})
+	Create("UIGradient", LS_Shim, {
+		Transparency = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 1),
+			NumberSequenceKeypoint.new(0.5, 0.4),
+			NumberSequenceKeypoint.new(1, 1)
+		})
+	})
+
+	-- % e versão
 	local LS_Pct = Create("TextLabel", LS_Card, {
-		Size = UDim2.new(0.5, -24, 0, 14),
-		Position = UDim2.new(0.5, 0, 0, 167),
+		Size = UDim2.new(0.5, -35, 0, 14),
+		Position = UDim2.new(0.5, 5, 0, 171),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.GothamBold,
 		Text = "0%",
 		TextColor3 = Color3.fromRGB(70, 70, 90),
 		TextSize = 10,
-		TextXAlignment = "Right",
-		ZIndex = 202
+		TextXAlignment = "Right"
 	})
 	Create("TextLabel", LS_Card, {
-		Size = UDim2.new(0.5, -24, 0, 14),
-		Position = UDim2.new(0, 24, 0, 167),
+		Size = UDim2.new(0.5, -35, 0, 14),
+		Position = UDim2.new(0, 30, 0, 171),
 		BackgroundTransparency = 1,
 		Font = Enum.Font.Gotham,
 		Text = "v" .. redzlib.Info.Version,
-		TextColor3 = Color3.fromRGB(50, 50, 65),
+		TextColor3 = Color3.fromRGB(45, 45, 60),
 		TextSize = 10,
-		TextXAlignment = "Left",
-		ZIndex = 202
+		TextXAlignment = "Left"
 	})
 
-	-- Pontos decorativos
-	local LS_Dots = Create("TextLabel", LS_Card, {
-		Size = UDim2.new(1, 0, 0, 18),
-		Position = UDim2.new(0, 0, 0, 188),
-		BackgroundTransparency = 1,
-		Font = Enum.Font.GothamBold,
-		Text = "· · ·",
-		TextColor3 = Color3.fromRGB(40, 40, 55),
-		TextSize = 14,
-		TextXAlignment = "Center",
-		ZIndex = 202
+	-- Ícones de etapa (pontos)
+	local LS_Steps = Create("Frame", LS_Card, {
+		Size = UDim2.new(1, -60, 0, 12),
+		Position = UDim2.new(0, 30, 0, 194),
+		BackgroundTransparency = 1
+	}, {
+		Create("UIListLayout", {
+			FillDirection = "Horizontal",
+			HorizontalAlignment = "Center",
+			Padding = UDim.new(0, 10)
+		})
 	})
+	local stepDots = {}
+	for i = 1, 5 do
+		local dot = Create("Frame", LS_Steps, {
+			Size = UDim2.fromOffset(8, 8),
+			BackgroundColor3 = Color3.fromRGB(35, 35, 50),
+			BorderSizePixel = 0
+		})
+		Create("UICorner", dot, {CornerRadius = UDim.new(1, 0)})
+		Create("UIStroke", dot, {Color = Theme["Color Stroke"], Thickness = 1, ApplyStrokeMode = "Border"})
+		table.insert(stepDots, dot)
+	end
 
 	task.spawn(function()
-		-- FASE 1: Card aparece com scale
-		TweenService:Create(LS_Card, TweenInfo.new(0.45, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+		-- FASE 1: Aparecer card com escala
+		TweenService:Create(LS_Card,
+			TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
 			{BackgroundTransparency = 0}):Play()
-		task.wait(0.1)
-		-- Título fade in
-		TweenService:Create(LS_Card:FindFirstChild("LS_Title"), TweenInfo.new(0.35),
-			{TextTransparency = 0}):Play()
-		-- Accent line expande
-		TweenService:Create(LS_AccentLine,
-			TweenInfo.new(0.55, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+		task.wait(0.12)
+		-- Accent line se expande
+		TweenService:Create(LS_AccentTop,
+			TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 			{Size = UDim2.new(1, 0, 0, 2)}):Play()
+		-- Título aparece
+		TweenService:Create(LS_Title, TweenInfo.new(0.4), {TextTransparency = 0}):Play()
 
-		-- Pulso do avatar
+		-- Pulso do anel
 		task.spawn(function()
+			local ringStroke = LS_Ring:FindFirstChildOfClass("UIStroke")
 			while LS_Card and LS_Card.Parent do
-				TweenService:Create(LS_Avatar, TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
-					{BackgroundTransparency = 0.55}):Play()
-				task.wait(1.1)
-				TweenService:Create(LS_Avatar, TweenInfo.new(1.1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
-					{BackgroundTransparency = 0.1}):Play()
-				task.wait(1.1)
+				TweenService:Create(LS_Ring, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+					{Size = UDim2.fromOffset(72, 72), Position = UDim2.new(0.5,0,0,28), AnchorPoint=Vector2.new(0.5,0)}):Play()
+				if ringStroke then
+					TweenService:Create(ringStroke, TweenInfo.new(1, Enum.EasingStyle.Sine),
+						{Transparency = 0.5}):Play()
+				end
+				task.wait(1)
+				TweenService:Create(LS_Ring, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+					{Size = UDim2.fromOffset(68, 68), Position = UDim2.new(0.5,0,0,30), AnchorPoint=Vector2.new(0.5,0)}):Play()
+				if ringStroke then
+					TweenService:Create(ringStroke, TweenInfo.new(1, Enum.EasingStyle.Sine),
+						{Transparency = 0}):Play()
+				end
+				task.wait(1)
 			end
 		end)
 
-		task.wait(0.3)
+		-- Shimmer loop
+		task.spawn(function()
+			while LS_Card and LS_Card.Parent do
+				TweenService:Create(LS_Shim, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+					{Position = UDim2.fromScale(1.2, 0)}):Play()
+				task.wait(0.9)
+				LS_Shim.Position = UDim2.fromScale(-0.2, 0)
+				task.wait(0.6)
+			end
+		end)
 
-		-- FASE 2: Progresso em 5 etapas
+		task.wait(0.4)
+
+		-- FASE 2: Etapas de progresso
 		local steps = {
-			{p=0.18, s="Carregando elementos...",  d="·  ○  ○"},
-			{p=0.40, s="Aplicando tema visual...",  d="●  ·  ○"},
-			{p=0.62, s="Construindo interface...",  d="●  ●  ·"},
-			{p=0.82, s="Configurando sistema...",   d="●  ●  ○"},
-			{p=1.00, s="Concluído!",               d="✦  ✦  ✦"},
+			{p=0.18, s="Carregando módulos...",    },
+			{p=0.38, s="Aplicando tema visual..."},
+			{p=0.58, s="Construindo interface..."},
+			{p=0.78, s="Configurando flags...",   },
+			{p=1.00, s="Concluído!",             },
 		}
 		for i, step in ipairs(steps) do
+			local dur = i == #steps and 0.2 or 0.28
+			-- Acender ponto da etapa
+			if stepDots[i] then
+				TweenService:Create(stepDots[i], TweenInfo.new(0.2),
+					{BackgroundColor3 = Theme["Color Theme"]}):Play()
+				local _s = stepDots[i]:FindFirstChildOfClass("UIStroke")
+				if _s then TweenService:Create(_s, TweenInfo.new(0.2), {Color = Theme["Color Theme"]}):Play() end
+			end
 			LS_Status.Text = step.s
-			LS_Dots.Text = step.d
 			LS_Pct.Text = math.floor(step.p * 100) .. "%"
 			if i == #steps then
-				LS_Status.TextColor3 = Color3.fromRGB(242, 242, 255)
-				LS_Dots.TextColor3 = Theme["Color Theme"]
+				LS_Status.TextColor3 = Color3.fromRGB(240, 240, 255)
 			end
-			local dur = (i == #steps) and 0.22 or 0.32
-			TweenService:Create(LS_BarFill,
-				TweenInfo.new(dur, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+			TweenService:Create(LS_Fill, TweenInfo.new(dur, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 				{Size = UDim2.fromScale(step.p, 1)}):Play()
-			task.wait(dur + 0.1)
+			task.wait(dur + 0.12)
 		end
 
 		task.wait(0.25)
 
-		-- FASE 3: Fade out + reveal da GUI
-		local fadeOut = TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
-		TweenService:Create(LS_Card,    fadeOut, {BackgroundTransparency=1, Size=UDim2.fromOffset(340,200)}):Play()
-		TweenService:Create(LS_Overlay, fadeOut, {BackgroundTransparency=1}):Play()
-		for _,v in ipairs(LS_Card:GetDescendants()) do
+		-- FASE 3: Saída elegante
+		local fadeT = TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+		for _, sp in pairs(sparks) do
+			TweenService:Create(sp, fadeT, {BackgroundTransparency = 1}):Play()
+		end
+		TweenService:Create(LS_Card, fadeT, {BackgroundTransparency = 1}):Play()
+		TweenService:Create(LS_Bg,   fadeT, {BackgroundTransparency = 1}):Play()
+		for _, v in ipairs(LS_Card:GetDescendants()) do
 			if v:IsA("TextLabel") then
-				TweenService:Create(v, TweenInfo.new(0.25), {TextTransparency=1}):Play()
+				TweenService:Create(v, TweenInfo.new(0.25), {TextTransparency = 1}):Play()
 			elseif v:IsA("Frame") then
-				TweenService:Create(v, TweenInfo.new(0.25), {BackgroundTransparency=1}):Play()
+				TweenService:Create(v, TweenInfo.new(0.25), {BackgroundTransparency = 1}):Play()
 			end
 		end
 		task.wait(0.45)
-		LS_Card:Destroy()
-		LS_Overlay:Destroy()
+		LS_Gui:Destroy()
 
-		-- GUI entra com animação Back suave
+		-- GUI abre com animação Back elástica
 		MainFrame.BackgroundTransparency = 0
 		MainFrame.Size = UDim2.fromOffset(_OrigSize.X.Offset, 0)
 		TweenService:Create(MainFrame,
 			TweenInfo.new(0.55, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
 			{Size = _OrigSize}):Play()
 	end)
-	
 	local Components = Create("Folder", MainFrame, {
 		Name = "Components"
 	})
@@ -1843,46 +1953,9 @@ function redzlib:MakeWindow(Configs)
 		Name = "TabLine"
 	})
 	
-	local ControlSize1, ControlSize2 = MakeDrag(Create("ImageButton", MainFrame, {
-		Size = UDim2.new(0, 35, 0, 35),
-		Position = MainFrame.Size,
-		Active = true,
-		AnchorPoint = Vector2.new(0.8, 0.8),
-		BackgroundTransparency = 1,
-		Name = "Control Hub Size"
-	})), MakeDrag(Create("ImageButton", MainFrame, {
-		Size = UDim2.new(0, 20, 1, -30),
-		Position = UDim2.new(0, MainScroll.Size.X.Offset, 1, 0),
-		AnchorPoint = Vector2.new(0.5, 1),
-		Active = true,
-		BackgroundTransparency = 1,
-		Name = "Control Tab Size"
-	}))
-	
-	local function ControlSize()
-		local Pos1, Pos2 = ControlSize1.Position, ControlSize2.Position
-		ControlSize1.Position = UDim2.fromOffset(math.clamp(Pos1.X.Offset, 430, 1000), math.clamp(Pos1.Y.Offset, 200, 500))
-		ControlSize2.Position = UDim2.new(0, math.clamp(Pos2.X.Offset, 135, 250), 1, 0)
-		
-		MainScroll.Size = UDim2.new(0, ControlSize2.Position.X.Offset, 1, -TopBar.Size.Y.Offset)
-		Containers.Size = UDim2.new(1, -MainScroll.Size.X.Offset, 1, -TopBar.Size.Y.Offset)
-		MainFrame.Size = ControlSize1.Position
-	end
-	
-	ControlSize1:GetPropertyChangedSignal("Position"):Connect(ControlSize)
-	ControlSize2:GetPropertyChangedSignal("Position"):Connect(ControlSize)
-	
-	ConnectSave(ControlSize1, function()
-		if not Minimized then
-			redzlib.Save.UISize = {MainFrame.Size.X.Offset, MainFrame.Size.Y.Offset}
-			SaveJson("redz library V5.json", redzlib.Save)
-		end
-	end)
-	
-	ConnectSave(ControlSize2, function()
-		redzlib.Save.TabSize = MainScroll.Size.X.Offset
-		SaveJson("redz library V5.json", redzlib.Save)
-	end)
+	-- Sistema de resize removido (tamanho fixo)
+	local ControlSize1 = Create("Frame", MainFrame, {Size=UDim2.new(0,0,0,0), BackgroundTransparency=1, Visible=false})
+	local ControlSize2 = ControlSize1
 	
 	local ButtonsFolder = Create("Folder", TopBar, {
 		Name = "Buttons"
@@ -1940,14 +2013,10 @@ function redzlib:MakeWindow(Configs)
 		if Minimized then
 			MinimizeButton.Text = "-"
 			CreateTween({MainFrame, "Size", SaveSize, 0.25, true})
-			ControlSize1.Visible = true
-			ControlSize2.Visible = true
 			Minimized = false
 		else
 			MinimizeButton.Text = "+"
 			SaveSize = MainFrame.Size
-			ControlSize1.Visible = false
-			ControlSize2.Visible = false
 			CreateTween({MainFrame, "Size", UDim2.fromOffset(MainFrame.Size.X.Offset, 28), 0.25, true})
 			Minimized = true
 		end
@@ -2122,20 +2191,17 @@ function redzlib:MakeWindow(Configs)
 		end
 		
 		local TabSelect = Make("Button", MainScroll, {
-			Size = UDim2.new(1, 0, 0, 36)
-		})Make("Corner", TabSelect, UDim.new(0, 8))
-		-- Gradiente de fundo (acende quando selecionado)
-		local TabGrad = Create("UIGradient", TabSelect, {
-			Color = ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Theme["Color Theme"]),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))
-			}),
-			Transparency = NumberSequence.new({
-				NumberSequenceKeypoint.new(0, FirstTab and 1 or 0.91),
-				NumberSequenceKeypoint.new(1, 1)
-			}),
-			Rotation = 90
+			Size = UDim2.new(1, 0, 0, 25)
+		})Make("Corner", TabSelect, UDim.new(0, 4))
+		-- Overlay de seleção (escurece levemente)
+		local TabGrad = Create("Frame", TabSelect, {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundColor3 = Theme["Color Theme"],
+			BackgroundTransparency = FirstTab and 1 or 0.88,
+			BorderSizePixel = 0,
+			ZIndex = 0
 		})
+		Create("UICorner", TabGrad, {CornerRadius = UDim.new(0, 8)})
 		
 		local LabelTitle = InsertTheme(Create("TextLabel", TabSelect, {
 			Size = UDim2.new(1, TIcon and -32 or -16, 1),
@@ -2143,7 +2209,7 @@ function redzlib:MakeWindow(Configs)
 			BackgroundTransparency = 1,
 			Font = Enum.Font.GothamBold,
 			Text = TName,
-			TextColor3 = FirstTab and Theme["Color Dark Text"] or Theme["Color Text"],
+			TextColor3 = FirstTab and Theme["Color Dark Text"] or Color3.fromRGB(255, 255, 255),
 			TextSize = 13,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = "AtEnd"
@@ -2205,19 +2271,19 @@ function redzlib:MakeWindow(Configs)
 				end
 			end
 			Container.Parent = Containers
-			Container.Size = UDim2.new(1, 0, 1, 150)
+			Container.Size = UDim2.new(1, 0, 1, 0)
+			Container.BackgroundTransparency = 1
 			table.foreach(redzlib.Tabs, function(_,Tab)
 				if Tab.Cont ~= Container then
 					Tab.func:Disable()
 				end
 			end)
 			Tab.Enabled = true
-			CreateTween({Container, "Size", UDim2.new(1, 0, 1, 0), 0.3})
-			CreateTween({LabelTitle, "TextColor3", Theme["Color Text"], 0.22})
+			CreateTween({LabelTitle, "TextColor3", Color3.fromRGB(255, 255, 255), 0.22})
 			CreateTween({LabelIcon, "ImageTransparency", 0, 0.22})
 			CreateTween({Selected, "Size", UDim2.new(0, 3, 0, 20), 0.28})
 			CreateTween({Selected, "BackgroundTransparency", 0, 0.22})
-			TweenService:Create(TabGrad, TweenInfo.new(0.25), {Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 0.90), NumberSequenceKeypoint.new(1, 1)})}):Play()
+			TweenService:Create(TabGrad, TweenInfo.new(0.25), {BackgroundTransparency = 0.88}):Play()
 		end
 		TabSelect.Activated:Connect(Tabs)
 		
@@ -2232,7 +2298,7 @@ function redzlib:MakeWindow(Configs)
 			CreateTween({LabelIcon, "ImageTransparency", 0.5, 0.22})
 			CreateTween({Selected, "Size", UDim2.new(0, 3, 0, 0), 0.22})
 			CreateTween({Selected, "BackgroundTransparency", 1, 0.18})
-			TweenService:Create(TabGrad, TweenInfo.new(0.25), {Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 1), NumberSequenceKeypoint.new(1, 1)})}):Play()
+			TweenService:Create(TabGrad, TweenInfo.new(0.25), {BackgroundTransparency = 1}):Play()
 		end
 		function Tab:Enable()
 			Tabs()
@@ -2368,7 +2434,7 @@ function redzlib:MakeWindow(Configs)
 			local Button, LabelFunc = ButtonFrame(Container, TName, TDesc, UDim2.new(1, -38))
 			
 			local ToggleHolder = Create("Frame", Button, {
-				Size = UDim2.new(0, 36, 0, 20),
+				Size = UDim2.new(0, 28, 0, 16),
 				Position = UDim2.new(1, -10, 0.5),
 				AnchorPoint = Vector2.new(1, 0.5),
 				BackgroundTransparency = 1,
@@ -2380,7 +2446,7 @@ function redzlib:MakeWindow(Configs)
 			}), "Stroke")
 			
 			local Toggle = Create("Frame", ToggleHolder, {
-				Size = UDim2.new(0, 16, 0, 16),
+				Size = UDim2.new(0, 13, 0, 13),
 				Position = UDim2.new(0, 2, 0.5),
 				AnchorPoint = Vector2.new(0, 0.5),
 				BackgroundColor3 = Theme["Color Stroke"]
@@ -2409,16 +2475,16 @@ function redzlib:MakeWindow(Configs)
 				SetFlag(Flag, Default)
 				Funcs:FireCallback(Callback, Default)
 				if Default then
-					CreateTween({Toggle, "Position", UDim2.new(1, -18, 0.5), 0.22})
+					CreateTween({Toggle, "Position", UDim2.new(1, -15, 0.5), 0.22})
 					CreateTween({Toggle, "BackgroundColor3", Theme["Color Theme"], 0.22})
 					CreateTween({ToggleStroke, "Color", Theme["Color Theme"], 0.22})
 					-- Pulse: expand e contrai
 					task.spawn(function()
 						TweenService:Create(Toggle, TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-							{Size = UDim2.fromOffset(18, 18)}):Play()
+							{Size = UDim2.fromOffset(15, 15)}):Play()
 						task.wait(0.09)
 						TweenService:Create(Toggle, TweenInfo.new(0.14, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
-							{Size = UDim2.fromOffset(16, 16)}):Play()
+							{Size = UDim2.fromOffset(13, 13)}):Play()
 					end)
 				else
 					CreateTween({Toggle, "Position", UDim2.new(0, 2, 0.5), 0.22})
@@ -2899,10 +2965,10 @@ function redzlib:MakeWindow(Configs)
 			
 			local SliderBar = Create("Frame", SliderHolder, {
 				BackgroundColor3 = Theme["Color Stroke"],
-				Size = UDim2.new(1, -24, 0, 6),
+				Size = UDim2.new(1, -20, 0, 7),
 				Position = UDim2.new(0.5, 0, 0.5),
 				AnchorPoint = Vector2.new(0.5, 0.5)
-			})Make("Corner", SliderBar, UDim.new(0, 3))
+			})Make("Corner", SliderBar)
 			
 			local Indicator = Create("Frame", SliderBar, {
 				BackgroundColor3 = Theme["Color Theme"],
@@ -2911,11 +2977,11 @@ function redzlib:MakeWindow(Configs)
 			})Make("Corner", Indicator)
 			
 			local SliderIcon = Create("Frame", SliderBar, {
-				Size = UDim2.new(0, 16, 0, 16),
+				Size = UDim2.new(0, 8, 0, 16),
 				BackgroundColor3 = Theme["Color Theme"],
 				Position = UDim2.fromScale(0.3, 0.5),
 				AnchorPoint = Vector2.new(0.5, 0.5),
-			})Make("Corner", SliderIcon, UDim.new(1, 0))
+			})Make("Corner", SliderIcon)
 			Create("UIStroke", SliderIcon, {Color = Color3.fromRGB(255,255,255), Thickness = 1.5, ApplyStrokeMode = "Border"})
 			Create("UIGradient", SliderIcon, {
 				Color = ColorSequence.new({
