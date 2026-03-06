@@ -13,71 +13,62 @@ local CoreGui = (gethui and gethui()) or game:GetService("CoreGui");
 local redzlib = {
 	Themes = {
 		-- ══════════════════════════════════════════════════════════════════
-		-- DARKER  —  aesthetic ultra-dark, detalhe em roxo frio profundo
-		-- Background quase preto com tint violeta imperceptível
-		-- Accent: #7B2FBE  (roxo escuro saturado, sem parecer néon)
-		-- Stroke: borda violeta muito apagada para dar separação sem brilho
+		-- NIGHT HUB  —  Replica exata do print
+		-- Janela:  #1E1E1E  (30,30,30)
+		-- Painel:  #262626  (38,38,38)  – lado direito dos elementos
+		-- Stroke:  #373737  (55,55,55)  – bordas finas
+		-- Theme:   #00AAFF  (0,170,255) – ciano azul, slider/scrollbar/toggle
+		-- Text:    #FFFFFF  (255,255,255)
+		-- DarkText:#787878  (120,120,120)
 		-- ══════════════════════════════════════════════════════════════════
 		Darker = {
 			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(6,  5,  9)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(10, 9, 14)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(6,  5,  9))
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 30, 30)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(33, 33, 33)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(30, 30, 30))
 			}),
-			["Color Hub 2"]     = Color3.fromRGB(9, 8, 13),
-			["Color Stroke"]    = Color3.fromRGB(38, 28, 58),
-			["Color Theme"]     = Color3.fromRGB(123, 47, 190),
-			["Color Text"]      = Color3.fromRGB(210, 205, 225),
-			["Color Dark Text"] = Color3.fromRGB(90, 80, 115)
+			["Color Hub 2"]     = Color3.fromRGB(38, 38, 38),
+			["Color Stroke"]    = Color3.fromRGB(55, 55, 55),
+			["Color Theme"]     = Color3.fromRGB(0, 170, 255),
+			["Color Text"]      = Color3.fromRGB(255, 255, 255),
+			["Color Dark Text"] = Color3.fromRGB(120, 120, 120)
 		},
-		-- ══════════════════════════════════════════════════════════════════
-		-- YELLOW  —  mantido original
-		-- ══════════════════════════════════════════════════════════════════
 		Yellow = {
 			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(35, 35, 35)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(45, 45, 45)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(35, 35, 35))
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 30, 30)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(33, 33, 33)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(30, 30, 30))
 			}),
-			["Color Hub 2"]     = Color3.fromRGB(40, 40, 40),
-			["Color Stroke"]    = Color3.fromRGB(180, 150, 40),
+			["Color Hub 2"]     = Color3.fromRGB(38, 38, 38),
+			["Color Stroke"]    = Color3.fromRGB(55, 55, 55),
 			["Color Theme"]     = Color3.fromRGB(255, 200, 40),
-			["Color Text"]      = Color3.fromRGB(245, 245, 245),
-			["Color Dark Text"] = Color3.fromRGB(190, 190, 190)
+			["Color Text"]      = Color3.fromRGB(255, 255, 255),
+			["Color Dark Text"] = Color3.fromRGB(120, 120, 120)
 		},
-		-- ══════════════════════════════════════════════════════════════════
-		-- DARK  —  mantido original
-		-- ══════════════════════════════════════════════════════════════════
 		Dark = {
 			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(40, 40, 40)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(47, 47, 47)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(40, 40, 40))
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 30, 30)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(33, 33, 33)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(30, 30, 30))
 			}),
-			["Color Hub 2"]     = Color3.fromRGB(45, 45, 45),
-			["Color Stroke"]    = Color3.fromRGB(65, 65, 65),
+			["Color Hub 2"]     = Color3.fromRGB(38, 38, 38),
+			["Color Stroke"]    = Color3.fromRGB(55, 55, 55),
 			["Color Theme"]     = Color3.fromRGB(65, 150, 255),
-			["Color Text"]      = Color3.fromRGB(245, 245, 245),
-			["Color Dark Text"] = Color3.fromRGB(190, 190, 190)
+			["Color Text"]      = Color3.fromRGB(255, 255, 255),
+			["Color Dark Text"] = Color3.fromRGB(120, 120, 120)
 		},
-		-- ══════════════════════════════════════════════════════════════════
-		-- PURPLE  —  variante mais roxa/saturada do Darker
-		-- ══════════════════════════════════════════════════════════════════
 		Purple = {
 			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(10, 7, 18)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(15, 11, 25)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(10, 7, 18))
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 30, 30)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(33, 33, 33)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(30, 30, 30))
 			}),
-			["Color Hub 2"]     = Color3.fromRGB(13, 9, 22),
-			["Color Stroke"]    = Color3.fromRGB(55, 35, 85),
-			["Color Theme"]     = Color3.fromRGB(148, 55, 220),
-			["Color Text"]      = Color3.fromRGB(215, 208, 235),
-			["Color Dark Text"] = Color3.fromRGB(100, 85, 130)
+			["Color Hub 2"]     = Color3.fromRGB(38, 38, 38),
+			["Color Stroke"]    = Color3.fromRGB(55, 55, 55),
+			["Color Theme"]     = Color3.fromRGB(150, 0, 255),
+			["Color Text"]      = Color3.fromRGB(255, 255, 255),
+			["Color Dark Text"] = Color3.fromRGB(120, 120, 120)
 		},
-		-- ══════════════════════════════════════════════════════════════════
-		-- NIER AUTOMATA  —  mantido original
-		-- ══════════════════════════════════════════════════════════════════
 		NierAutomata = {
 			["Color Hub 1"] = ColorSequence.new({
 				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(15, 15, 15)),
@@ -88,7 +79,7 @@ local redzlib = {
 			["Color Stroke"]    = Color3.fromRGB(40, 40, 40),
 			["Color Theme"]     = Color3.fromRGB(218, 165, 32),
 			["Color Text"]      = Color3.fromRGB(255, 255, 255),
-			["Color Dark Text"] = Color3.fromRGB(180, 180, 180)
+			["Color Dark Text"] = Theme["Color Dark Text"]
 		}
 	},
 	Info = {
@@ -1273,7 +1264,7 @@ AddEle("Button", function(parent, props, ...)
 	}), props), "Frame")
 	
 	New.MouseEnter:Connect(function()
-		New.BackgroundTransparency = 0.4
+		New.BackgroundTransparency = 0.3
 	end)
 	New.MouseLeave:Connect(function()
 		New.BackgroundTransparency = 0
@@ -1294,7 +1285,7 @@ end)
 
 local function ButtonFrame(Instance, Title, Description, HolderSize)
 	local TitleL = InsertTheme(Create("TextLabel", {
-		Font = Enum.Font.FredokaOne,
+		Font = Enum.Font.GothamBold,
 		TextColor3 = Theme["Color Text"],
 		Size = UDim2.new(1, -20),
 		AutomaticSize = "Y",
@@ -1302,21 +1293,21 @@ local function ButtonFrame(Instance, Title, Description, HolderSize)
 		AnchorPoint = Vector2.new(0, 0.5),
 		BackgroundTransparency = 1,
 		TextTruncate = "AtEnd",
-		TextSize = 12,
+		TextSize = 13,
 		TextXAlignment = "Left",
 		Text = "",
 		RichText = true
 	}), "Text")
 	
 	local DescL = InsertTheme(Create("TextLabel", {
-		Font = Enum.Font.FredokaOne,
+		Font = Enum.Font.Gotham,
 		TextColor3 = Theme["Color Dark Text"],
 		Size = UDim2.new(1, -20),
 		AutomaticSize = "Y",
-		Position = UDim2.new(0, 12, 0, 15),
+		Position = UDim2.new(0, 12, 0, 16),
 		BackgroundTransparency = 1,
 		TextWrapped = true,
-		TextSize = 10,
+		TextSize = 11,
 		TextXAlignment = "Left",
 		Text = "",
 		RichText = true
@@ -1467,16 +1458,24 @@ function redzlib:MakeWindow(Configs)
 	end;LoadFile()
 	
 	local UISizeX, UISizeY = unpack(redzlib.Save.UISize)
-	local MainFrame = InsertTheme(Create("ImageButton", ScreenGui, {
+	local MainFrame = Create("ImageButton", ScreenGui, {
 		Size = UDim2.fromOffset(UISizeX, UISizeY),
 		Position = UDim2.new(0.5, -UISizeX/2, 0.5, -UISizeY/2),
-		BackgroundColor3 = Theme["Color Hub 2"],
+		BackgroundColor3 = Color3.fromRGB(30, 30, 30),
 		BackgroundTransparency = 0,
 		Name = "Hub"
-	}), "Frame")
-	Make("Stroke", MainFrame)MakeDrag(MainFrame)
+	})
+	Make("Corner", MainFrame, UDim.new(0, 6))
+	Create("UIStroke", MainFrame, {
+		Color = Color3.fromRGB(55, 55, 55),
+		Thickness = 1,
+		ApplyStrokeMode = "Border"
+	})
+	MakeDrag(MainFrame)
+	-- register for theme
+	InsertTheme(MainFrame, "Frame")
 	
-	local MainCorner = Make("Corner", MainFrame, UDim.new(0, 4))
+	local MainCorner = MainFrame:FindFirstChildOfClass("UICorner")
 	
 	-- Animação de abertura estilo V2
 	local _OrigSize = MainFrame.Size
@@ -1495,17 +1494,29 @@ function redzlib:MakeWindow(Configs)
 		Name = "Dropdown"
 	})
 	
+	-- TopBar com fundo escuro próprio (#1A1A1A) igual ao print
 	local TopBar = Create("Frame", Components, {
-		Size = UDim2.new(1, 0, 0, 28),
-		BackgroundTransparency = 1,
-		Name = "Top Bar"
+		Size = UDim2.new(1, 0, 0, 36),
+		BackgroundColor3 = Color3.fromRGB(26, 26, 26),
+		BorderSizePixel = 0,
+		Name = "Top Bar",
+		ZIndex = 2
+	})
+	Create("UICorner", TopBar, { CornerRadius = UDim.new(0, 6) })
+	-- Cobre só os cantos de baixo (deixa arredondado só em cima)
+	Create("Frame", TopBar, {
+		Size = UDim2.new(1, 0, 0.5, 0),
+		Position = UDim2.new(0, 0, 0.5, 0),
+		BackgroundColor3 = Color3.fromRGB(26, 26, 26),
+		BorderSizePixel = 0,
+		ZIndex = 2
 	})
 	
-	-- Linha separadora horizontal (estilo V2)
+	-- Linha separadora horizontal fina
 	Create("Frame", Components, {
 		Size = UDim2.new(1, 0, 0, 1),
-		Position = UDim2.new(0, 0, 0, 28),
-		BackgroundColor3 = Theme["Color Stroke"],
+		Position = UDim2.new(0, 0, 0, 36),
+		BackgroundColor3 = Color3.fromRGB(55, 55, 55),
 		BorderSizePixel = 0,
 		Name = "TopBarLine"
 	})
@@ -1516,11 +1527,12 @@ function redzlib:MakeWindow(Configs)
 		AutomaticSize = "XY",
 		Text = WTitle,
 		TextXAlignment = "Left",
-		TextSize = 20,
-		TextColor3 = Theme["Color Text"],
+		TextSize = 16,
+		TextColor3 = Color3.fromRGB(255, 255, 255),
 		BackgroundTransparency = 1,
-		Font = Enum.Font.FredokaOne,
-		Name = "Title"
+		Font = Enum.Font.GothamBold,
+		Name = "Title",
+		ZIndex = 3
 	}, {
 		InsertTheme(Create("TextLabel", {
 			Size = UDim2.fromScale(0, 1),
@@ -1528,13 +1540,14 @@ function redzlib:MakeWindow(Configs)
 			AnchorPoint = Vector2.new(0, 1),
 			Position = UDim2.new(1, 5, 0.9),
 			Text = WMiniText,
-			TextColor3 = Theme["Color Dark Text"],
+			TextColor3 = Color3.fromRGB(120, 120, 120),
 			BackgroundTransparency = 1,
 			TextXAlignment = "Left",
 			TextYAlignment = "Bottom",
-			TextSize = 12,
-			Font = Enum.Font.FredokaOne,
-			Name = "SubTitle"
+			TextSize = 11,
+			Font = Enum.Font.Gotham,
+			Name = "SubTitle",
+			ZIndex = 3
 		}), "DarkText")
 	}), "Text")
 	
@@ -1543,7 +1556,7 @@ function redzlib:MakeWindow(Configs)
 		ScrollBarImageColor3 = Theme["Color Theme"],
 		Position = UDim2.new(0, 0, 1, 0),
 		AnchorPoint = Vector2.new(0, 1),
-		ScrollBarThickness = 1.5,
+		ScrollBarThickness = 2,
 		BackgroundTransparency = 1,
 		ScrollBarImageTransparency = 0.2,
 		CanvasSize = UDim2.new(),
@@ -1553,12 +1566,12 @@ function redzlib:MakeWindow(Configs)
 		Name = "Tab Scroll"
 	}, {
 		Create("UIPadding", {
-			PaddingLeft = UDim.new(0, 10),
-			PaddingRight = UDim.new(0, 10),
-			PaddingTop = UDim.new(0, 10),
-			PaddingBottom = UDim.new(0, 10)
+			PaddingLeft = UDim.new(0, 8),
+			PaddingRight = UDim.new(0, 8),
+			PaddingTop = UDim.new(0, 8),
+			PaddingBottom = UDim.new(0, 8)
 		}), Create("UIListLayout", {
-			Padding = UDim.new(0, 5)
+			Padding = UDim.new(0, 3)
 		})
 	}), "ScrollBar")
 	
@@ -1566,16 +1579,18 @@ function redzlib:MakeWindow(Configs)
 		Size = UDim2.new(1, -MainScroll.Size.X.Offset, 1, -TopBar.Size.Y.Offset),
 		AnchorPoint = Vector2.new(1, 1),
 		Position = UDim2.new(1, 0, 1, 0),
-		BackgroundTransparency = 1,
+		BackgroundColor3 = Color3.fromRGB(38, 38, 38),
+		BackgroundTransparency = 0,
 		ClipsDescendants = true,
 		Name = "Containers"
 	})
+	InsertTheme(Containers, "Frame")
 	
-	-- Linha separadora vertical entre tabs e containers (estilo V2)
+	-- Linha separadora vertical entre tabs e conteúdo
 	Create("Frame", Components, {
-		Size = UDim2.new(0, 1, 1, -29),
-		Position = UDim2.new(0, MainScroll.Size.X.Offset, 0, 29),
-		BackgroundColor3 = Theme["Color Stroke"],
+		Size = UDim2.new(0, 1, 1, -37),
+		Position = UDim2.new(0, MainScroll.Size.X.Offset, 0, 37),
+		BackgroundColor3 = Color3.fromRGB(55, 55, 55),
 		BorderSizePixel = 0,
 		Name = "TabLine"
 	})
@@ -1625,31 +1640,47 @@ function redzlib:MakeWindow(Configs)
 		Name = "Buttons"
 	})
 	
-	local CloseButton = InsertTheme(Create("TextButton", {
-		Size = UDim2.new(0, 25, 0, 20),
-		Position = UDim2.new(1, -10, 0.5),
+	-- Botão X — igual ao print: texto branco simples no canto direito
+	local CloseButton = Create("TextButton", {
+		Size = UDim2.new(0, 20, 0, 20),
+		Position = UDim2.new(1, -12, 0.5),
 		AnchorPoint = Vector2.new(1, 0.5),
 		BackgroundTransparency = 1,
-		Text = "X",
-		Font = Enum.Font.FredokaOne,
-		TextSize = 20,
-		TextColor3 = Theme["Color Text"],
+		Text = "✕",
+		Font = Enum.Font.GothamBold,
+		TextSize = 13,
+		TextColor3 = Color3.fromRGB(200, 200, 200),
 		AutoButtonColor = false,
-		Name = "Close"
-	}), "Text")
+		Name = "Close",
+		ZIndex = 4
+	})
+	CloseButton.MouseEnter:Connect(function()
+		CloseButton.TextColor3 = Color3.fromRGB(255, 80, 80)
+	end)
+	CloseButton.MouseLeave:Connect(function()
+		CloseButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+	end)
 	
-	local MinimizeButton = InsertTheme(Create("TextButton", {
-		Size = UDim2.new(0, 25, 0, 20),
-		Position = UDim2.new(1, -38, 0.5),
+	-- Botão — (minimizar) igual ao print
+	local MinimizeButton = Create("TextButton", {
+		Size = UDim2.new(0, 20, 0, 20),
+		Position = UDim2.new(1, -34, 0.5),
 		AnchorPoint = Vector2.new(1, 0.5),
 		BackgroundTransparency = 1,
-		Text = "-",
-		Font = Enum.Font.FredokaOne,
-		TextSize = 25,
-		TextColor3 = Theme["Color Text"],
+		Text = "−",
+		Font = Enum.Font.GothamBold,
+		TextSize = 16,
+		TextColor3 = Color3.fromRGB(200, 200, 200),
 		AutoButtonColor = false,
-		Name = "Minimize"
-	}), "Text")
+		Name = "Minimize",
+		ZIndex = 4
+	})
+	MinimizeButton.MouseEnter:Connect(function()
+		MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	end)
+	MinimizeButton.MouseLeave:Connect(function()
+		MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+	end)
 	
 	SetChildren(ButtonsFolder, {
 		CloseButton,
@@ -1748,7 +1779,7 @@ function redzlib:MakeWindow(Configs)
 			BackgroundColor3 = Theme["Color Hub 2"]
 		}, {
 			InsertTheme(Create("TextLabel", {
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				Size = UDim2.new(1, 0, 0, 25),
 				Text = DTitle,
 				TextXAlignment = "Left",
@@ -1758,7 +1789,7 @@ function redzlib:MakeWindow(Configs)
 				BackgroundTransparency = 1
 			}), "Text"),
 			InsertTheme(Create("TextLabel", {
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				Size = UDim2.new(1, -25),
 				AutomaticSize = "Y",
 				Text = DText,
@@ -1811,7 +1842,7 @@ function redzlib:MakeWindow(Configs)
 			Make("Corner", Button)
 			SetProps(Button, {
 				Text = Name,
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				TextColor3 = Theme["Color Text"],
 				TextSize = 15
 			})
@@ -1859,37 +1890,45 @@ function redzlib:MakeWindow(Configs)
 		end
 		
 		local TabSelect = Make("Button", MainScroll, {
-			Size = UDim2.new(1, 0, 0, 25)
-		})Make("Corner", TabSelect, UDim.new(0, 4))Make("Stroke", TabSelect)
+			Size = UDim2.new(1, 0, 0, 28),
+			BackgroundTransparency = 1
+		})
+		-- SEM corner, SEM stroke na tab — igual ao print
 		
-		local LabelTitle = InsertTheme(Create("TextLabel", TabSelect, {
-			Size = UDim2.new(1, TIcon and -25 or -15, 1),
-			Position = UDim2.fromOffset(TIcon and 25 or 15),
+		local LabelTitle = Create("TextLabel", TabSelect, {
+			Size = UDim2.new(1, TIcon and -28 or -18, 1),
+			Position = UDim2.fromOffset(TIcon and 28 or 14),
 			BackgroundTransparency = 1,
-			Font = Enum.Font.FredokaOne,
+			Font = Enum.Font.GothamBold,
 			Text = TName,
-			TextColor3 = FirstTab and Theme["Color Dark Text"] or Theme["Color Text"],
-			TextSize = 15,
+			TextColor3 = FirstTab and Color3.fromRGB(120, 120, 120) or Color3.fromRGB(255, 255, 255),
+			TextSize = 13,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = "AtEnd"
-		}), "Text")
+		})
+		InsertTheme(LabelTitle, "Text")
 		
-		local LabelIcon = InsertTheme(Create("ImageLabel", TabSelect, {
+		local LabelIcon = Create("ImageLabel", TabSelect, {
 			Position = UDim2.new(0, 8, 0.5),
 			Size = UDim2.new(0, 13, 0, 13),
 			AnchorPoint = Vector2.new(0, 0.5),
 			Image = TIcon or "",
 			BackgroundTransparency = 1,
-			ImageTransparency = (FirstTab and 0.3) or 0
-		}), "Text")
+			ImageTransparency = (FirstTab and 0.55) or 0,
+			ImageColor3 = Color3.fromRGB(255, 255, 255)
+		})
+		InsertTheme(LabelIcon, "Text")
 		
-		local Selected = InsertTheme(Create("Frame", TabSelect, {
-			Size = FirstTab and UDim2.new(0, 4, 0, 4) or UDim2.new(0, 4, 0, 13),
-			Position = UDim2.new(0, 1, 0.5),
+		-- Barra vertical lateral branca (indicador de tab selecionada)
+		local Selected = Create("Frame", TabSelect, {
+			Size = FirstTab and UDim2.new(0, 3, 0, 0) or UDim2.new(0, 3, 0, 16),
+			Position = UDim2.new(0, 0, 0.5),
 			AnchorPoint = Vector2.new(0, 0.5),
-			BackgroundColor3 = Theme["Color Theme"],
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 			BackgroundTransparency = FirstTab and 1 or 0
-		}), "Theme")Make("Corner", Selected, UDim.new(0.5, 0))
+		})
+		Make("Corner", Selected, UDim.new(0, 2))
+		InsertTheme(Selected, "Text") -- usa Text para ficar branco independente do tema
 		
 		local Container = InsertTheme(Create("ScrollingFrame", {
 			Size = UDim2.new(1, 0, 1, 0),
@@ -1937,10 +1976,10 @@ function redzlib:MakeWindow(Configs)
 			end)
 			Tab.Enabled = true
 			CreateTween({Container, "Size", UDim2.new(1, 0, 1, 0), 0.3})
-			CreateTween({LabelTitle, "TextColor3", Theme["Color Text"], 0.3})
-			CreateTween({LabelIcon, "ImageTransparency", 0, 0.35})
-			CreateTween({Selected, "Size", UDim2.new(0, 4, 0, 13), 0.35})
-			CreateTween({Selected, "BackgroundTransparency", 0, 0.35})
+			CreateTween({LabelTitle, "TextColor3", Color3.fromRGB(255, 255, 255), 0.25})
+			CreateTween({LabelIcon, "ImageTransparency", 0, 0.25})
+			CreateTween({Selected, "Size", UDim2.new(0, 3, 0, 16), 0.3})
+			CreateTween({Selected, "BackgroundTransparency", 0, 0.25})
 		end
 		TabSelect.Activated:Connect(Tabs)
 		
@@ -1951,10 +1990,10 @@ function redzlib:MakeWindow(Configs)
 		function Tab:Disable()
 		  self.Enabled = false
 			Container.Parent = nil
-			CreateTween({LabelTitle, "TextColor3", Theme["Color Dark Text"], 0.35})
-			CreateTween({LabelIcon, "ImageTransparency", 0.3, 0.35})
-			CreateTween({Selected, "Size", UDim2.new(0, 4, 0, 4), 0.35})
-			CreateTween({Selected, "BackgroundTransparency", 1, 0.35})
+			CreateTween({LabelTitle, "TextColor3", Color3.fromRGB(120, 120, 120), 0.25})
+			CreateTween({LabelIcon, "ImageTransparency", 0.55, 0.25})
+			CreateTween({Selected, "Size", UDim2.new(0, 3, 0, 0), 0.25})
+			CreateTween({Selected, "BackgroundTransparency", 1, 0.25})
 		end
 		function Tab:Enable()
 			Tabs()
@@ -1975,7 +2014,7 @@ function redzlib:MakeWindow(Configs)
 			})
 			
 			local SectionLabel = InsertTheme(Create("TextLabel", SectionFrame, {
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				Text = SectionName,
 				TextColor3 = Theme["Color Text"],
 				Size = UDim2.new(1, -25, 1, 0),
@@ -2043,14 +2082,14 @@ function redzlib:MakeWindow(Configs)
 			})
 			
 			FButton.MouseEnter:Connect(function()
-				CreateTween({ButtonIcon, "ImageColor3", Theme["Color Theme"], 0.3})
+				CreateTween({ButtonIcon, "ImageColor3", Theme["Color Theme"], 0.25})
 			end)
 			FButton.MouseLeave:Connect(function()
-				CreateTween({ButtonIcon, "ImageColor3", Theme["Color Stroke"], 0.3})
+				CreateTween({ButtonIcon, "ImageColor3", Theme["Color Stroke"], 0.25})
 			end)
 			
 			FButton.Activated:Connect(function()
-				CreateTween({ButtonIcon, "ImageColor3", Theme["Color Theme"], 0.2, true})
+				CreateTween({ButtonIcon, "ImageColor3", Theme["Color Theme"], 0.15, true})
 				CreateTween({ButtonIcon, "ImageColor3", Theme["Color Stroke"], 0.2, false})
 				Funcs:FireCallback(Callback)
 			end)
@@ -2171,7 +2210,7 @@ function redzlib:MakeWindow(Configs)
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = UDim2.new(0.5, 0, 0.5, 0),
 				BackgroundTransparency = 1,
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				TextScaled = true,
 				TextColor3 = Theme["Color Dark Text"],
 				Text = "..."
@@ -2387,7 +2426,7 @@ function redzlib:MakeWindow(Configs)
 						Position = UDim2.new(0, 10),
 						Text = Name,
 						TextColor3 = Theme["Color Dark Text"],
-						Font = Enum.Font.FredokaOne,
+						Font = Enum.Font.Gotham,
 						TextXAlignment = "Left",
 						BackgroundTransparency = 1,
 						TextSize = 12
@@ -2525,11 +2564,11 @@ function redzlib:MakeWindow(Configs)
 			})Make("Corner", Indicator)
 			
 			local SliderIcon = Create("Frame", SliderBar, {
-				Size = UDim2.new(0, 8, 0, 16),
-				BackgroundColor3 = Theme["Color Text"],
+				Size = UDim2.new(0, 10, 0, 10),
+				BackgroundColor3 = Theme["Color Theme"],
 				Position = UDim2.fromScale(0.3, 0.5),
 				AnchorPoint = Vector2.new(0.5, 0.5),
-			})Make("Corner", SliderIcon)
+			})Make("Corner", SliderIcon, UDim.new(1, 0))
 			
 			local LabelVal = InsertTheme(Create("TextLabel", SliderHolder, {
 				Size = UDim2.new(0, 20, 0, 20),
@@ -2537,7 +2576,7 @@ function redzlib:MakeWindow(Configs)
 				Position = UDim2.new(0, 0, 0.5),
 				BackgroundTransparency = 1,
 				TextColor3 = Theme["Color Text"],
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				TextScaled = true
 			}), "Text")
 			
@@ -2647,7 +2686,7 @@ function redzlib:MakeWindow(Configs)
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Position = UDim2.new(0.5, 0, 0.5, 0),
 				BackgroundTransparency = 1,
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				TextScaled = true,
 				TextColor3 = Theme["Color Text"],
 				ClearTextOnFocus = TClearText,
@@ -2687,7 +2726,6 @@ function redzlib:MakeWindow(Configs)
 			end
 			
 			TextBoxInput.FocusLost:Connect(Input)
-			-- Restore last value if nothing typed
 			if TDefault then Input() end
 			
 			TextBoxInput.FocusLost:Connect(function()
@@ -2718,7 +2756,7 @@ function redzlib:MakeWindow(Configs)
 				Size = UDim2.new(1, 0, 0, 15),
 				Position = UDim2.new(0, 5),
 				TextColor3 = Theme["Color Theme"],
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				TextXAlignment = "Left",
 				BackgroundTransparency = 1,
 				TextSize = 12,
@@ -2742,7 +2780,7 @@ function redzlib:MakeWindow(Configs)
 			local LTitle = InsertTheme(Create("TextLabel", FrameHolder, {
 				Size = UDim2.new(1, -52, 0, 20),
 				Position = UDim2.new(0, 44, 0, 7),
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				TextColor3 = Theme["Color Text"],
 				TextXAlignment = "Left",
 				BackgroundTransparency = 1,
@@ -2755,7 +2793,7 @@ function redzlib:MakeWindow(Configs)
 				Position = UDim2.new(0, 44, 0, 27),
 				TextWrapped = "Y",
 				AutomaticSize = "Y",
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				TextColor3 = Theme["Color Dark Text"],
 				TextXAlignment = "Left",
 				BackgroundTransparency = 1,
@@ -2768,7 +2806,7 @@ function redzlib:MakeWindow(Configs)
 				AnchorPoint = Vector2.new(0.5, 1),
 				Position = UDim2.new(0.5, 0, 1, -7),
 				Text = "Join",
-				Font = Enum.Font.FredokaOne,
+				Font = Enum.Font.Gotham,
 				TextSize = 15,
 				TextColor3 = Theme["Color Text"],
 				BackgroundColor3 = Theme["Color Theme"]
@@ -2782,8 +2820,8 @@ function redzlib:MakeWindow(Configs)
 				ClickDelay = true
 				SetProps(JoinButton, {
 					Text = "Copied to Clipboard",
-					BackgroundColor3 = Theme["Color Stroke"],
-					TextColor3 = Theme["Color Dark Text"]
+					BackgroundColor3 = Color3.fromRGB(100, 100, 100),
+					TextColor3 = Color3.fromRGB(150, 150, 150)
 				})task.wait(5)
 				SetProps(JoinButton, {
 					Text = "Join",
