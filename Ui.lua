@@ -12,66 +12,74 @@ local CoreGui = (gethui and gethui()) or game:GetService("CoreGui");
 
 local redzlib = {
 	Themes = {
+		-- ── Darker Purple (redesign) ──────────────────────────────────────
+		-- Fundo extremamente escuro (~8 8 10) com gradiente sutil de tint roxo.
+		-- Accent: Violet puro #9B5DE5 → vibrante mas não berrante.
+		-- Stroke: linha lilás muito apagada para dar profundidade sem ruído.
 		Darker = {
 			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(25, 25, 25)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(32.5, 32.5, 32.5)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(25, 25, 25))
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(8,  8,  11)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(13, 12, 17)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(8,  8,  11))
 			}),
-			["Color Hub 2"] = Color3.fromRGB(30, 30, 30),
-			["Color Stroke"] = Color3.fromRGB(40, 40, 40),
-			["Color Theme"] = Color3.fromRGB(88, 101, 242),
-			["Color Text"] = Color3.fromRGB(243, 243, 243),
-			["Color Dark Text"] = Color3.fromRGB(180, 180, 180)
+			["Color Hub 2"]     = Color3.fromRGB(12, 11, 16),
+			["Color Stroke"]    = Color3.fromRGB(50, 35, 75),  -- lilás escuro
+			["Color Theme"]     = Color3.fromRGB(155, 93, 229), -- violet #9B5DE5
+			["Color Text"]      = Color3.fromRGB(235, 230, 255),
+			["Color Dark Text"] = Color3.fromRGB(130, 115, 160)
 		},
+		-- ── Yellow ──────────────────────────────────────────────────────────
 		Yellow = {
-    ["Color Hub 1"] = ColorSequence.new({
-        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(35, 35, 35)),
-        ColorSequenceKeypoint.new(0.50, Color3.fromRGB(45, 45, 45)),
-        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(35, 35, 35))
-    }),
-    ["Color Hub 2"] = Color3.fromRGB(40, 40, 40),
-    ["Color Stroke"] = Color3.fromRGB(180, 150 , 40),
-
-    ["Color Theme"] = Color3.fromRGB(255, 200, 40),
-
-    ["Color Text"] = Color3.fromRGB(245, 245, 245),
-    ["Color Dark Text"] = Color3.fromRGB(190, 190, 190)
-},
+			["Color Hub 1"] = ColorSequence.new({
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(35, 35, 35)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(45, 45, 45)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(35, 35, 35))
+			}),
+			["Color Hub 2"]     = Color3.fromRGB(40, 40, 40),
+			["Color Stroke"]    = Color3.fromRGB(180, 150, 40),
+			["Color Theme"]     = Color3.fromRGB(255, 200, 40),
+			["Color Text"]      = Color3.fromRGB(245, 245, 245),
+			["Color Dark Text"] = Color3.fromRGB(190, 190, 190)
+		},
+		-- ── Dark ─────────────────────────────────────────────────────────────
 		Dark = {
 			["Color Hub 1"] = ColorSequence.new({
 				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(40, 40, 40)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(47.5, 47.5, 47.5)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(47, 47, 47)),
 				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(40, 40, 40))
 			}),
-			["Color Hub 2"] = Color3.fromRGB(45, 45, 45),
-			["Color Stroke"] = Color3.fromRGB(65, 65, 65),
-			["Color Theme"] = Color3.fromRGB(65, 150, 255),
-			["Color Text"] = Color3.fromRGB(245, 245, 245),
+			["Color Hub 2"]     = Color3.fromRGB(45, 45, 45),
+			["Color Stroke"]    = Color3.fromRGB(65, 65, 65),
+			["Color Theme"]     = Color3.fromRGB(65, 150, 255),
+			["Color Text"]      = Color3.fromRGB(245, 245, 245),
 			["Color Dark Text"] = Color3.fromRGB(190, 190, 190)
 		},
+		-- ── Purple ───────────────────────────────────────────────────────────
+		-- Versão ligeiramente mais saturada que o Darker, para quem quer
+		-- mais presença de roxo nos painéis.
 		Purple = {
 			["Color Hub 1"] = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(27.5, 25, 30)),
-				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(32.5, 32.5, 32.5)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(27.5, 25, 30))
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(14, 10, 22)),
+				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(20, 15, 32)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(14, 10, 22))
 			}),
-			["Color Hub 2"] = Color3.fromRGB(30, 30, 30),
-			["Color Stroke"] = Color3.fromRGB(40, 40, 40),
-			["Color Theme"] = Color3.fromRGB(150, 0, 255),
-			["Color Text"] = Color3.fromRGB(240, 240, 240),
-			["Color Dark Text"] = Color3.fromRGB(180, 180, 180)
+			["Color Hub 2"]     = Color3.fromRGB(18, 13, 28),
+			["Color Stroke"]    = Color3.fromRGB(70, 45, 110),
+			["Color Theme"]     = Color3.fromRGB(175, 60, 255),
+			["Color Text"]      = Color3.fromRGB(240, 235, 255),
+			["Color Dark Text"] = Color3.fromRGB(140, 115, 175)
 		},
+		-- ── NierAutomata ─────────────────────────────────────────────────────
 		NierAutomata = {
 			["Color Hub 1"] = ColorSequence.new({
 				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(15, 15, 15)),
 				ColorSequenceKeypoint.new(0.50, Color3.fromRGB(20, 20, 20)),
 				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(15, 15, 15))
 			}),
-			["Color Hub 2"] = Color3.fromRGB(18, 18, 18),
-			["Color Stroke"] = Color3.fromRGB(40, 40, 40),
-			["Color Theme"] = Color3.fromRGB(218, 165, 32), -- Dourado da 2B
-			["Color Text"] = Color3.fromRGB(255, 255, 255),
+			["Color Hub 2"]     = Color3.fromRGB(18, 18, 18),
+			["Color Stroke"]    = Color3.fromRGB(40, 40, 40),
+			["Color Theme"]     = Color3.fromRGB(218, 165, 32), -- Dourado da 2B
+			["Color Text"]      = Color3.fromRGB(255, 255, 255),
 			["Color Dark Text"] = Color3.fromRGB(180, 180, 180)
 		}
 	},
@@ -81,7 +89,7 @@ local redzlib = {
 	Save = {
 		UISize = {700, 400},
 		TabSize = 160,
-		Theme = "NierAutomata"
+		Theme = "Darker"
 	},
 	Settings = {},
 	Connection = {},
@@ -2676,7 +2684,7 @@ function redzlib:MakeWindow(Configs)
 				CreateTween({LineSep, "BackgroundColor3", Theme["Color Stroke"], 0.2})
 			end)
 			TextBoxInput.Focused:Connect(function()
-				CreateTween({LineSep, "BackgroundColor3", Color3.fromRGB(30, 140, 200), 0.2})
+				CreateTween({LineSep, "BackgroundColor3", Color3.fromRGB(155, 93, 229), 0.2})
 			end)
 			
 			TextBox.OnChanging = false
@@ -2699,7 +2707,7 @@ function redzlib:MakeWindow(Configs)
 			local InviteLabel = Create("TextLabel", InviteHolder, {
 				Size = UDim2.new(1, 0, 0, 15),
 				Position = UDim2.new(0, 5),
-				TextColor3 = Color3.fromRGB(30, 140, 200),
+				TextColor3 = Color3.fromRGB(155, 93, 229),
 				Font = Enum.Font.FredokaOne,
 				TextXAlignment = "Left",
 				BackgroundTransparency = 1,
@@ -2752,8 +2760,8 @@ function redzlib:MakeWindow(Configs)
 				Text = "Join",
 				Font = Enum.Font.FredokaOne,
 				TextSize = 15,
-				TextColor3 = Color3.fromRGB(220, 220, 220),
-				BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+				TextColor3 = Color3.fromRGB(235, 230, 255),
+				BackgroundColor3 = Color3.fromRGB(155, 93, 229)
 			})Make("Corner", JoinButton, UDim.new(0, 4))Make("Stroke", JoinButton)
 			
 			local ClickDelay
@@ -2764,13 +2772,13 @@ function redzlib:MakeWindow(Configs)
 				ClickDelay = true
 				SetProps(JoinButton, {
 					Text = "Copied to Clipboard",
-					BackgroundColor3 = Color3.fromRGB(100, 100, 100),
-					TextColor3 = Color3.fromRGB(150, 150, 150)
+					BackgroundColor3 = Color3.fromRGB(40, 35, 55),
+					TextColor3 = Color3.fromRGB(100, 85, 130)
 				})task.wait(5)
 				SetProps(JoinButton, {
 					Text = "Join",
-					BackgroundColor3 = Color3.fromRGB(50, 150, 50),
-					TextColor3 = Color3.fromRGB(220, 220, 220)
+					BackgroundColor3 = Color3.fromRGB(155, 93, 229),
+					TextColor3 = Color3.fromRGB(235, 230, 255)
 				})ClickDelay = false
 			end)
 			
